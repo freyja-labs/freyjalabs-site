@@ -1,0 +1,76 @@
+---
+const navLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/services', label: 'Services' },
+  { href: '/approach', label: 'Approach' },
+  { href: '/blog', label: 'Blog' },
+];
+---
+
+<nav id="nav" class="fixed top-0 w-full z-50 bg-cream/92 backdrop-blur-xl border-b border-border transition-shadow duration-300">
+  <div class="max-w-6xl mx-auto px-8 py-4 flex items-center justify-between">
+    <a href="/" class="font-serif text-[22px] font-semibold text-forest tracking-wide">Freyja Labs</a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      {navLinks.map(link => (
+        <a href={link.href} class="font-sans text-sm font-medium text-muted tracking-wide hover:text-forest transition-colors">
+          {link.label}
+        </a>
+      ))}
+      <a href="/contact" class="bg-forest text-warm-white px-6 py-2.5 rounded-md text-sm font-semibold hover:bg-forest-dark transition-colors">
+        Get in Touch
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden flex flex-col gap-1.5 p-2"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <span class="block w-6 h-0.5 bg-ink transition-transform duration-200" id="bar1"></span>
+      <span class="block w-6 h-0.5 bg-ink transition-opacity duration-200" id="bar2"></span>
+      <span class="block w-6 h-0.5 bg-ink transition-transform duration-200" id="bar3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-cream">
+    <div class="px-8 py-6 flex flex-col gap-4">
+      {navLinks.map(link => (
+        <a href={link.href} class="font-sans text-base font-medium text-muted hover:text-forest transition-colors">
+          {link.label}
+        </a>
+      ))}
+      <a href="/contact" class="bg-forest text-warm-white px-6 py-3 rounded-md text-sm font-semibold text-center hover:bg-forest-dark transition-colors mt-2">
+        Get in Touch
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Scroll shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav')?.classList.toggle('shadow-md', window.scrollY > 20);
+  });
+
+  // Mobile menu toggle
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+  const bar3 = document.getElementById('bar3');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(isOpen));
+    bar1?.classList.toggle('rotate-45', isOpen);
+    bar1?.classList.toggle('translate-y-[4px]', isOpen);
+    bar2?.classList.toggle('opacity-0', isOpen);
+    bar3?.classList.toggle('-rotate-45', isOpen);
+    bar3?.classList.toggle('-translate-y-[4px]', isOpen);
+  });
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://freyjalabs.com/sitemap-index.xml

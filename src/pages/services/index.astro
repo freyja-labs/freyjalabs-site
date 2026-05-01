@@ -1,0 +1,47 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionLabel from '../../components/ui/SectionLabel.astro';
+import Button from '../../components/ui/Button.astro';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<PageLayout
+  title="Services"
+  description="Freyja Labs offers custom workshops, district consulting, train-the-trainer programs, and virtual professional development."
+  path="/services"
+>
+  <section class="px-8 pt-20 pb-24">
+    <div class="max-w-4xl mx-auto">
+      <SectionLabel>What We Do</SectionLabel>
+      <h1 class="font-serif text-4xl md:text-5xl font-medium text-ink leading-tight mb-4">
+        Services shaped by your needs
+      </h1>
+      <p class="text-[17px] leading-relaxed text-muted max-w-2xl mb-14">
+        From a single workshop to a multi-year strategic partnership, we design every engagement from scratch. No off-the-shelf packages. No one-size-fits-all.
+      </p>
+
+      <div class="space-y-8">
+        {services.map(service => (
+          <a
+            href={`/services/${service.id}`}
+            class="block p-10 bg-warm-white border border-border rounded-lg hover:border-forest transition-colors duration-200"
+          >
+            <div class="font-mono text-[10px] tracking-widest uppercase text-forest-light mb-3">{service.data.tag}</div>
+            <h2 class="font-serif text-3xl font-semibold text-ink mb-3">{service.data.title}</h2>
+            <p class="text-[17px] leading-relaxed text-muted mb-4">{service.data.tagline}</p>
+            {service.data.priceRange && (
+              <p class="text-sm text-faded italic">{service.data.priceRange}</p>
+            )}
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-14 text-center">
+        <p class="text-[17px] text-muted mb-6">Not sure which service fits? Let's figure it out together.</p>
+        <Button href="/contact">Start a Conversation</Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

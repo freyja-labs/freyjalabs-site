@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #3D6B4F;
+  --color-forest-dark: #2A4E38;
+  --color-forest-light: #5A8E6D;
+  --color-earth: #6B5B3E;
+  --color-earth-light: #8A7A5C;
+  --color-clay: #9E7E5A;
+  --color-sand: #D4C5A9;
+  --color-cream: #FAF7F2;
+  --color-warm-white: #FFFEF9;
+  --color-ink: #1C1C1C;
+  --color-muted: #5A5A5A;
+  --color-faded: #8A8A8A;
+  --color-border: #DDD5C8;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --animate-fade-up: fadeUp 0.6s ease forwards;
+  --animate-grow: growUp 2s ease forwards;
+  --animate-pulse-glow: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes growUp {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes leafGrow {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  padding: 0.5rem 1rem;
+  background: var(--color-forest);
+  color: var(--color-warm-white);
+  font-weight: 600;
+}
+
+.skip-to-content:focus {
+  left: 0;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+}
+
+/* Meristem SVG animations */
+.stem-line {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: growUp 2s ease forwards;
+}
+
+.leaf {
+  transform-origin: center;
+  animation: leafGrow 0.5s ease forwards;
+  opacity: 0;
+}
+
+.growth-point {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

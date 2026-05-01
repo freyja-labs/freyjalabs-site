@@ -1,0 +1,52 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionLabel from '../components/ui/SectionLabel.astro';
+import ContactForm from '../components/ui/ContactForm.astro';
+---
+
+<PageLayout
+  title="Contact"
+  description="Start a conversation with Freyja Labs about professional development for your school, district, or organization."
+  path="/contact"
+>
+  <section class="px-8 pt-20 pb-24">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-[1fr_1.5fr] gap-16">
+        <!-- Left column: info -->
+        <div>
+          <SectionLabel>Get in Touch</SectionLabel>
+          <h1 class="font-serif text-4xl md:text-5xl font-medium text-ink leading-tight mb-6">
+            Let's talk
+          </h1>
+          <p class="text-[17px] leading-relaxed text-muted mb-8">
+            Every engagement begins with a conversation. Tell us about your context, your goals, and your challenges — we'll take it from there.
+          </p>
+
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-sans text-sm font-semibold text-ink mb-1">Email us directly</h3>
+              <a href="mailto:hello@freyjalabs.com" class="text-forest font-medium hover:text-forest-dark transition-colors">
+                hello@freyjalabs.com
+              </a>
+            </div>
+
+            <!-- Calendly placeholder -->
+            <div>
+              <h3 class="font-sans text-sm font-semibold text-ink mb-1">Schedule a call</h3>
+              <p class="text-sm text-faded">
+                Scheduling link coming soon.
+              </p>
+              <!-- Calendly embed slot: replace with embed code when ready -->
+              <div id="calendly-embed" class="mt-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column: form -->
+        <div>
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>

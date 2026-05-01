@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <Nav />
+  <main id="main-content" class="flex-1 pt-[72px]">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>

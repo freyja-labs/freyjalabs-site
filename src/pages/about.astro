@@ -1,0 +1,111 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionLabel from '../components/ui/SectionLabel.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<PageLayout
+  title="About"
+  description="Meet the founders of Freyja Labs — researchers and educators building professional development that actually changes classroom practice."
+  path="/about"
+>
+  <!-- Origin Story -->
+  <section class="px-8 pt-20 pb-24">
+    <div class="max-w-3xl mx-auto">
+      <SectionLabel>Our Story</SectionLabel>
+      <h1 class="font-serif text-4xl md:text-5xl font-medium text-ink leading-tight mb-8">
+        Why Freyja Labs exists
+      </h1>
+      <div class="space-y-6 text-[17px] leading-relaxed text-muted">
+        <p>
+          The education landscape is shifting faster than most professional development can keep up with. Computer science mandates are rolling out state by state. AI literacy has gone from a niche interest to an urgent priority. Computational thinking is showing up in science standards, math frameworks, and career readiness benchmarks.
+        </p>
+        <p>
+          Meanwhile, the professional development most teachers receive hasn't changed in decades. One-day sit-and-get sessions. Generic slide decks. No follow-up. No customization. No connection to what actually happens in classrooms the next Monday morning.
+        </p>
+        <p>
+          We founded Freyja Labs because we saw this gap firsthand — as researchers studying what works, and as practitioners delivering PD ourselves. We've spent years inside schools and districts, working shoulder-to-shoulder with teachers, coaches, and administrators. We know what it takes to move practice, not just check a box.
+        </p>
+        <p>
+          Freyja Labs is the vehicle for doing this work the right way: fully tailored, hands-on, research-grounded, and ahead of the curve. Every engagement we take on is designed from scratch for the people in the room.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Founders -->
+  <section class="bg-warm-white px-8 py-24">
+    <div class="max-w-4xl mx-auto">
+      <SectionLabel>The Founders</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-14">
+        Two researchers. One mission.
+      </h2>
+
+      <!-- Mike -->
+      <div class="mb-16">
+        <div class="flex items-center gap-6 mb-6">
+          <div class="w-24 h-24 rounded-full bg-forest flex items-center justify-center shrink-0">
+            <span class="font-serif text-[32px] text-warm-white font-semibold">MB</span>
+          </div>
+          <div>
+            <h3 class="font-serif text-3xl font-semibold text-ink">Mike Borowczak, Ph.D.</h3>
+            <div class="font-mono text-xs tracking-widest uppercase text-earth mt-1">Co-Founder</div>
+          </div>
+        </div>
+        <div class="space-y-4 text-[15px] leading-relaxed text-muted">
+          <p>
+            Mike is a hardware security researcher and engineering educator who directs a 50-member research lab at a major research university. His funded research portfolio exceeds $8M, spanning hardware security, AI/ML, secure architectures, and computing education. He serves as Editor-in-Chief of an engineering education journal and has been a PI or co-PI on multiple NSF-funded projects.
+          </p>
+          <p>
+            What sets Mike apart in the PD space is his ability to translate deeply technical content — from cryptographic hardware to machine learning pipelines — into experiences that are accessible, hands-on, and genuinely useful for educators at every level. He has delivered workshops to elementary teachers, high school CS departments, district curriculum teams, and corporate engineering groups, adapting the same rigorous content to radically different audiences.
+          </p>
+        </div>
+      </div>
+
+      <!-- Andrea -->
+      <div>
+        <div class="flex items-center gap-6 mb-6">
+          <div class="w-24 h-24 rounded-full bg-forest flex items-center justify-center shrink-0">
+            <span class="font-serif text-[32px] text-warm-white font-semibold">AB</span>
+          </div>
+          <div>
+            <h3 class="font-serif text-3xl font-semibold text-ink">Andrea C. Burrows Borowczak, Ph.D.</h3>
+            <div class="font-mono text-xs tracking-widest uppercase text-earth mt-1">Co-Founder</div>
+          </div>
+        </div>
+        <div class="space-y-4 text-[15px] leading-relaxed text-muted">
+          <p>
+            Andrea is a STEM education scholar and teacher preparation specialist who directs a school of teacher education at a major research university. She is a principal investigator on multiple NSF-funded projects studying STEM integration, teacher preparation, and professional development effectiveness. Her research has been published in leading education journals and presented at national and international conferences.
+          </p>
+          <p>
+            Andrea's expertise is in designing professional development that actually changes classroom practice — not just raises awareness or distributes materials. She brings deep knowledge of how teachers learn, how curriculum gets adopted (or doesn't), and what institutional conditions make reform stick. Her work bridges the gap between education research and the daily reality of teaching.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="px-8 py-24">
+    <div class="max-w-3xl mx-auto">
+      <SectionLabel>Our Philosophy</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-8">
+        Small tell. Lots of do.
+      </h2>
+      <div class="space-y-6 text-[17px] leading-relaxed text-muted">
+        <p>
+          Our approach is simple in principle and demanding in execution: every session we design is built around active participation. The ratio of doing to listening is intentional, tracked, and non-negotiable.
+        </p>
+        <p>
+          This philosophy is informed by a research-backed pedagogical framework developed by the founders — one that emphasizes contextualizing content for the specific audience, building through hands-on assembly and iteration, and ensuring transfer to real classroom settings. It's not a branded methodology we sell; it's how we think about instructional design.
+        </p>
+        <p>
+          We also believe in staying ahead of the curve. We were delivering CS integration workshops before state mandates. We were building AI literacy modules before the hype cycle. We were teaching computational modeling before it showed up in the NGSS. Our clients get access to the thinking that will matter next.
+        </p>
+      </div>
+      <div class="mt-10">
+        <Button href="/approach">Learn about our approach &rarr;</Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>

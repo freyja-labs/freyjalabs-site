@@ -1,0 +1,26 @@
+---
+import Button from '../ui/Button.astro';
+import MeristemGlyph from '../icons/MeristemGlyph.astro';
+---
+
+<section class="px-8 pt-28 pb-20 md:pt-44 md:pb-28">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 md:gap-20 items-center">
+    <div>
+      <h1 class="font-serif text-4xl md:text-[56px] font-medium leading-[1.1] text-ink tracking-tight mb-2">
+        Professional development<br/>
+        <em class="text-forest italic">where growth begins.</em>
+      </h1>
+      <p class="font-serif text-[22px] text-earth italic mb-7">Freyja Labs</p>
+      <p class="text-[17px] leading-relaxed text-muted mb-9 max-w-lg">
+        We design hands-on, customized professional development for school districts, schools, and organizations navigating the intersection of technology and teaching. No generic workshops. No passive audiences. Every engagement is built for your people, your context, and your future.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <Button href="/contact">Start a Conversation</Button>
+        <Button href="/services" variant="secondary">Explore Services</Button>
+      </div>
+    </div>
+    <div class="flex items-center justify-center">
+      <MeristemGlyph class="w-64 h-64 md:w-80 md:h-80" />
+    </div>
+  </div>
+</section>

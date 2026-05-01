@@ -1,0 +1,42 @@
+---
+import SectionLabel from '../ui/SectionLabel.astro';
+
+const cards = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-8-10H2m20 0h-2m-2.93-6.07l-1.41 1.41M7.34 16.66l-1.41 1.41m0-11.14l1.41 1.41m9.32 9.32l1.41 1.41"/></svg>`,
+    title: 'Tailored to You',
+    description: 'Every engagement begins with your context: your teachers, your students, your standards, your goals. We design from the ground up. Nothing is off the shelf.',
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
+    title: 'Hands-On by Design',
+    description: "Participants build, test, and iterate. The ratio of doing to listening is intentional and non-negotiable. If the room isn't active, we haven't done our job.",
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>`,
+    title: 'Research-Grounded',
+    description: "Both founders are active researchers with current publications and funded projects. Our content reflects what the evidence actually says, not what sounded good in a brochure.",
+  },
+];
+---
+
+<section class="bg-warm-white px-8 py-24">
+  <div class="max-w-6xl mx-auto">
+    <SectionLabel>Our Philosophy</SectionLabel>
+    <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-4">Small tell. Lots of do.</h2>
+    <p class="text-[17px] text-muted leading-relaxed max-w-xl mb-14">
+      We believe professional development should mirror the classrooms we want to create: active, relevant, and built for the people in the room.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8">
+      {cards.map(card => (
+        <div class="p-8 bg-cream border border-border rounded-lg hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+          <div class="w-12 h-12 bg-forest rounded-xl flex items-center justify-center mb-5">
+            <Fragment set:html={card.icon} />
+          </div>
+          <h3 class="font-serif text-[22px] font-semibold text-ink mb-3">{card.title}</h3>
+          <p class="text-[15px] leading-relaxed text-muted">{card.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

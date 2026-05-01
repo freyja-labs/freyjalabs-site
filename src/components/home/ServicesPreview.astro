@@ -1,0 +1,49 @@
+---
+import SectionLabel from '../ui/SectionLabel.astro';
+
+const services = [
+  {
+    tag: 'On-Site',
+    title: 'Custom Workshops',
+    description: 'Multi-day, hands-on professional development sessions built for your teachers, your context, and your standards. Topics span STEM integration, AI literacy, computational thinking, and curriculum design.',
+    slug: 'custom-workshops',
+  },
+  {
+    tag: 'Strategic',
+    title: 'District Consulting',
+    description: 'Long-term advisory partnerships for districts pursuing systemic integration of STEM, computing, or AI. Includes needs assessment, strategic planning, implementation coaching, and progress evaluation.',
+    slug: 'district-consulting',
+  },
+  {
+    tag: 'Scalable',
+    title: 'Train-the-Trainer',
+    description: 'Licensed facilitator-ready PD modules that your coaches, coordinators, and department leads can deliver independently. Build internal capacity that sustains beyond our engagement.',
+    slug: 'train-the-trainer',
+  },
+  {
+    tag: 'Flexible',
+    title: 'Virtual & Hybrid',
+    description: 'Shorter-form virtual sessions and asynchronous modules that maintain the hands-on philosophy even in remote formats. Designed for broader reach without sacrificing quality.',
+    slug: 'virtual-hybrid',
+  },
+];
+---
+
+<section class="px-8 py-24">
+  <div class="max-w-6xl mx-auto">
+    <SectionLabel>What We Do</SectionLabel>
+    <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-4">Services shaped by your needs</h2>
+    <p class="text-[17px] text-muted leading-relaxed max-w-xl mb-14">
+      From a single workshop to a multi-year strategic partnership, we scale to the challenge.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      {services.map(service => (
+        <a href={`/services/${service.slug}`} class="block p-9 bg-warm-white border border-border rounded-lg hover:border-forest transition-colors duration-200">
+          <div class="font-mono text-[10px] tracking-widest uppercase text-forest-light mb-3">{service.tag}</div>
+          <h3 class="font-serif text-2xl font-semibold text-ink mb-3">{service.title}</h3>
+          <p class="text-[15px] leading-relaxed text-muted">{service.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

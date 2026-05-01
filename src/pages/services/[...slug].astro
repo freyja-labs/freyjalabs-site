@@ -1,0 +1,52 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionLabel from '../../components/ui/SectionLabel.astro';
+import Button from '../../components/ui/Button.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map(service => ({
+    params: { slug: service.id },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const { Content } = await render(service);
+---
+
+<PageLayout
+  title={service.data.title}
+  description={service.data.tagline}
+  path={`/services/${service.id}`}
+>
+  <section class="px-8 pt-20 pb-24">
+    <div class="max-w-3xl mx-auto">
+      <a href="/services" class="inline-block text-sm text-forest font-medium mb-8 hover:text-forest-dark transition-colors">&larr; All Services</a>
+      <div class="font-mono text-[10px] tracking-widest uppercase text-forest-light mb-3">{service.data.tag}</div>
+      <h1 class="font-serif text-4xl md:text-5xl font-medium text-ink leading-tight mb-4">{service.data.title}</h1>
+      <p class="text-xl text-muted leading-relaxed mb-4">{service.data.tagline}</p>
+      {service.data.priceRange && (
+        <p class="text-sm text-faded italic border-l-4 border-sand pl-4 mb-12">{service.data.priceRange}</p>
+      )}
+
+      <div class="
+        [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-ink [&_h2]:mt-12 [&_h2]:mb-4
+        [&_h3]:font-serif [&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-ink [&_h3]:mt-8 [&_h3]:mb-3
+        [&_p]:text-[17px] [&_p]:text-muted [&_p]:leading-relaxed [&_p]:mb-6
+        [&_ul]:text-muted [&_ul]:leading-relaxed [&_ul]:mb-6 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2
+        [&_ol]:text-muted [&_ol]:leading-relaxed [&_ol]:mb-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:space-y-2
+        [&_li]:text-[15px]
+        [&_strong]:text-ink [&_strong]:font-semibold
+      ">
+        <Content />
+      </div>
+
+      <div class="mt-14 pt-10 border-t border-border">
+        <p class="text-[17px] text-muted mb-6">Interested in this service?</p>
+        <Button href="/contact">Start a Conversation</Button>
+      </div>
+    </div>
+  </section>
+</PageLayout>
