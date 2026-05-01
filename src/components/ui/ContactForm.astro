@@ -6,6 +6,14 @@ const hearAboutOptions = [
   'Social media',
   'Other',
 ];
+
+const interestOptions = [
+  'Custom Workshops',
+  'District Consulting',
+  'Train-the-Trainer',
+  'Virtual & Hybrid',
+  'Something else',
+];
 ---
 
 <form
@@ -56,6 +64,23 @@ const hearAboutOptions = [
       />
     </div>
   </div>
+
+  <fieldset>
+    <legend class="block text-sm font-medium text-ink mb-3">Interested in <span class="text-faded font-normal">(select any that apply)</span></legend>
+    <div class="grid sm:grid-cols-2 gap-2.5">
+      {interestOptions.map(option => (
+        <label class="flex items-start gap-3 px-4 py-3 bg-warm-white border border-border rounded-md cursor-pointer hover:border-forest-light transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest/5">
+          <input
+            type="checkbox"
+            name="interests[]"
+            value={option}
+            class="mt-0.5 h-4 w-4 accent-forest cursor-pointer"
+          />
+          <span class="text-[15px] text-ink leading-snug">{option}</span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
 
   <div>
     <label for="message" class="block text-sm font-medium text-ink mb-2">Message</label>
