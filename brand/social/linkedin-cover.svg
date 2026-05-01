@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1584 396" width="1584" height="396">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="#5A8E6D" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <!-- Background -->
+  <rect width="1584" height="396" fill="#FAF7F2"/>
+  <rect width="1584" height="396" fill="url(#dots)"/>
+
+  <!-- Decorative right-side mark, partially visible -->
+  <g transform="translate(1280, 30) scale(1.7)">
+    <circle cx="100" cy="100" r="15" fill="#3D6B4F" opacity="0.95"/>
+    <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.5" transform="rotate(-15 100 70)"/>
+    <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.45" transform="rotate(50 130 85)"/>
+    <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.4" transform="rotate(115 125 125)"/>
+    <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.35" transform="rotate(180 85 135)"/>
+    <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.3" transform="rotate(245 65 100)"/>
+    <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+    <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+  </g>
+
+  <!-- Tagline / value prop on left-center, in the LinkedIn safe zone -->
+  <text x="440" y="180" font-family="Cormorant Garamond, Georgia, serif" font-size="64" font-weight="600" fill="#3D6B4F">Where growth begins.</text>
+  <text x="440" y="240" font-family="Outfit, sans-serif" font-size="22" font-weight="400" fill="#6B5B3E" letter-spacing="2">PROFESSIONAL DEVELOPMENT  ·  CUSTOM DESIGN  ·  HANDS-ON</text>
+
+  <!-- Thin underline -->
+  <line x1="440" y1="280" x2="600" y2="280" stroke="#3D6B4F" stroke-width="2"/>
+  <text x="440" y="320" font-family="Outfit, sans-serif" font-size="20" font-weight="500" fill="#1C1C1C">freyjalabs.com</text>
+</svg>

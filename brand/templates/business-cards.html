@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Freyja Labs — Business Cards</title>
+<style>
+  :root {
+    --forest: #3D6B4F;
+    --forest-dark: #2A4E38;
+    --forest-light: #5A8E6D;
+    --earth: #6B5B3E;
+    --cream: #FAF7F2;
+    --warm-white: #FFFEF9;
+    --ink: #1C1C1C;
+    --muted: #5A5A5A;
+    --border: #DDD5C8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Print specs:
+     Trim size: 3.5 x 2 in
+     Bleed: 0.125in each side
+     Full size with bleed: 3.75 x 2.25 in
+     Safe area (margin from trim): 0.125in
+  */
+  @page {
+    size: 3.75in 2.25in;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .card {
+    width: 3.75in;
+    height: 2.25in;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .card:last-child { page-break-after: auto; }
+
+  /* The trim area: 3.5x2 inset 0.125 from each side */
+  .trim {
+    position: absolute;
+    top: 0.125in;
+    left: 0.125in;
+    width: 3.5in;
+    height: 2in;
+    overflow: hidden;
+  }
+
+  /* The safe area: 3.25x1.75 inset 0.125 from trim */
+  .safe {
+    position: absolute;
+    top: 0.25in;
+    left: 0.25in;
+    width: 3.25in;
+    height: 1.75in;
+  }
+
+  /* ============ FRONT FACE — solid forest with mark ============ */
+  .card.front {
+    background: var(--forest);
+  }
+
+  .front .safe {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .front .top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .front svg {
+    width: 0.55in;
+    height: 0.55in;
+    flex-shrink: 0;
+  }
+
+  .front .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22pt;
+    font-weight: 600;
+    color: white;
+    line-height: 1;
+    letter-spacing: 0.3px;
+  }
+
+  .front .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 8px;
+  }
+
+  .front .url-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 8px;
+    font-size: 8pt;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .front .url-row .url {
+    color: white;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 9.5pt;
+  }
+
+  /* ============ BACK FACE — cream with details ============ */
+  .card.back {
+    background: var(--cream);
+  }
+
+  .back .safe {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .back .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16pt;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 2px;
+  }
+
+  .back .title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8pt;
+    color: var(--earth);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .back .firm {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11pt;
+    font-style: italic;
+    color: var(--forest);
+    margin-top: 8px;
+  }
+
+  .back .contact {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    font-size: 9pt;
+    line-height: 1.7;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .back .contact .lines div {
+    margin-bottom: 1px;
+  }
+
+  .back .contact .label {
+    font-size: 7pt;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .back .contact .mark-tiny svg {
+    width: 0.45in;
+    height: 0.45in;
+    opacity: 0.85;
+  }
+
+  /* ============ CROP MARKS (for print reference) ============ */
+  .crop-marks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Crop marks at corners showing trim edge */
+  }
+  .crop-mark {
+    position: absolute;
+    background: var(--ink);
+    opacity: 0.4;
+  }
+  /* Top-left corner */
+  .crop-tl-h { top: 0.125in; left: 0; width: 0.08in; height: 0.5pt; }
+  .crop-tl-v { top: 0; left: 0.125in; width: 0.5pt; height: 0.08in; }
+  /* Top-right */
+  .crop-tr-h { top: 0.125in; right: 0; width: 0.08in; height: 0.5pt; }
+  .crop-tr-v { top: 0; right: 0.125in; width: 0.5pt; height: 0.08in; }
+  /* Bottom-left */
+  .crop-bl-h { bottom: 0.125in; left: 0; width: 0.08in; height: 0.5pt; }
+  .crop-bl-v { bottom: 0; left: 0.125in; width: 0.5pt; height: 0.08in; }
+  /* Bottom-right */
+  .crop-br-h { bottom: 0.125in; right: 0; width: 0.08in; height: 0.5pt; }
+  .crop-br-v { bottom: 0; right: 0.125in; width: 0.5pt; height: 0.08in; }
+</style>
+</head>
+<body>
+
+<!-- =========================================
+     FRONT — Mike's card
+     ========================================= -->
+<div class="card front">
+  <div class="trim">
+    <div class="safe">
+      <div class="top-row">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="15" fill="#FFFFFF"/>
+          <ellipse cx="100" cy="70" rx="18" ry="10" fill="#FFFFFF" opacity="0.85" transform="rotate(-15 100 70)"/>
+          <ellipse cx="130" cy="85" rx="20" ry="11" fill="#FFFFFF" opacity="0.7" transform="rotate(50 130 85)"/>
+          <ellipse cx="125" cy="125" rx="22" ry="12" fill="#FFFFFF" opacity="0.55" transform="rotate(115 125 125)"/>
+          <ellipse cx="85" cy="135" rx="25" ry="12" fill="#FFFFFF" opacity="0.4" transform="rotate(180 85 135)"/>
+          <ellipse cx="65" cy="100" rx="25" ry="12" fill="#FFFFFF" opacity="0.3" transform="rotate(245 65 100)"/>
+          <circle cx="100" cy="100" r="8" fill="#2A4E38"/>
+          <circle cx="100" cy="100" r="4" fill="#FFFFFF"/>
+        </svg>
+        <div>
+          <div class="wordmark">Freyja Labs</div>
+          <div class="tagline">Where growth begins.</div>
+        </div>
+      </div>
+      <div class="url-row">
+        <span>Professional Development</span>
+        <span class="url">freyjalabs.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="crop-marks">
+    <div class="crop-mark crop-tl-h"></div><div class="crop-mark crop-tl-v"></div>
+    <div class="crop-mark crop-tr-h"></div><div class="crop-mark crop-tr-v"></div>
+    <div class="crop-mark crop-bl-h"></div><div class="crop-mark crop-bl-v"></div>
+    <div class="crop-mark crop-br-h"></div><div class="crop-mark crop-br-v"></div>
+  </div>
+</div>
+
+<!-- =========================================
+     BACK — Mike's card
+     ========================================= -->
+<div class="card back">
+  <div class="trim">
+    <div class="safe">
+      <div>
+        <div class="name">Mike Borowczak, Ph.D.</div>
+        <div class="title">Co-Founder</div>
+        <div class="firm">Freyja Labs</div>
+      </div>
+      <div class="contact">
+        <div class="lines">
+          <div><span class="label">E</span>mike@freyjalabs.com</div>
+          <div><span class="label">W</span>freyjalabs.com</div>
+        </div>
+        <div class="mark-tiny">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+            <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+            <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+            <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+            <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+            <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+            <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+            <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crop-marks">
+    <div class="crop-mark crop-tl-h"></div><div class="crop-mark crop-tl-v"></div>
+    <div class="crop-mark crop-tr-h"></div><div class="crop-mark crop-tr-v"></div>
+    <div class="crop-mark crop-bl-h"></div><div class="crop-mark crop-bl-v"></div>
+    <div class="crop-mark crop-br-h"></div><div class="crop-mark crop-br-v"></div>
+  </div>
+</div>
+
+<!-- =========================================
+     FRONT — Andrea's card
+     ========================================= -->
+<div class="card front">
+  <div class="trim">
+    <div class="safe">
+      <div class="top-row">
+        <svg viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="15" fill="#FFFFFF"/>
+          <ellipse cx="100" cy="70" rx="18" ry="10" fill="#FFFFFF" opacity="0.85" transform="rotate(-15 100 70)"/>
+          <ellipse cx="130" cy="85" rx="20" ry="11" fill="#FFFFFF" opacity="0.7" transform="rotate(50 130 85)"/>
+          <ellipse cx="125" cy="125" rx="22" ry="12" fill="#FFFFFF" opacity="0.55" transform="rotate(115 125 125)"/>
+          <ellipse cx="85" cy="135" rx="25" ry="12" fill="#FFFFFF" opacity="0.4" transform="rotate(180 85 135)"/>
+          <ellipse cx="65" cy="100" rx="25" ry="12" fill="#FFFFFF" opacity="0.3" transform="rotate(245 65 100)"/>
+          <circle cx="100" cy="100" r="8" fill="#2A4E38"/>
+          <circle cx="100" cy="100" r="4" fill="#FFFFFF"/>
+        </svg>
+        <div>
+          <div class="wordmark">Freyja Labs</div>
+          <div class="tagline">Where growth begins.</div>
+        </div>
+      </div>
+      <div class="url-row">
+        <span>Professional Development</span>
+        <span class="url">freyjalabs.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="crop-marks">
+    <div class="crop-mark crop-tl-h"></div><div class="crop-mark crop-tl-v"></div>
+    <div class="crop-mark crop-tr-h"></div><div class="crop-mark crop-tr-v"></div>
+    <div class="crop-mark crop-bl-h"></div><div class="crop-mark crop-bl-v"></div>
+    <div class="crop-mark crop-br-h"></div><div class="crop-mark crop-br-v"></div>
+  </div>
+</div>
+
+<!-- =========================================
+     BACK — Andrea's card
+     ========================================= -->
+<div class="card back">
+  <div class="trim">
+    <div class="safe">
+      <div>
+        <div class="name">Andrea C. Burrows<br>Borowczak, Ed.D.</div>
+        <div class="title" style="margin-top: 4px;">Co-Founder</div>
+        <div class="firm">Freyja Labs</div>
+      </div>
+      <div class="contact">
+        <div class="lines">
+          <div><span class="label">E</span>andrea@freyjalabs.com</div>
+          <div><span class="label">W</span>freyjalabs.com</div>
+        </div>
+        <div class="mark-tiny">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+            <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+            <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+            <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+            <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+            <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+            <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+            <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="crop-marks">
+    <div class="crop-mark crop-tl-h"></div><div class="crop-mark crop-tl-v"></div>
+    <div class="crop-mark crop-tr-h"></div><div class="crop-mark crop-tr-v"></div>
+    <div class="crop-mark crop-bl-h"></div><div class="crop-mark crop-bl-v"></div>
+    <div class="crop-mark crop-br-h"></div><div class="crop-mark crop-br-v"></div>
+  </div>
+</div>
+
+</body>
+</html>

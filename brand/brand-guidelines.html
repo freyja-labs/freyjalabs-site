@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Freyja Labs — Brand Guidelines</title>
+<style>
+  @font-face {
+    font-family: 'Cormorant Garamond';
+    src: local('Cormorant Garamond');
+    font-weight: 400 700;
+  }
+  @font-face {
+    font-family: 'Outfit';
+    src: local('Outfit');
+    font-weight: 400 700;
+  }
+
+  :root {
+    --forest: #3D6B4F;
+    --forest-dark: #2A4E38;
+    --forest-light: #5A8E6D;
+    --earth: #6B5B3E;
+    --earth-light: #8A7A5C;
+    --clay: #9E7E5A;
+    --sand: #D4C5A9;
+    --cream: #FAF7F2;
+    --warm-white: #FFFEF9;
+    --ink: #1C1C1C;
+    --muted: #5A5A5A;
+    --faded: #8A8A8A;
+    --border: #DDD5C8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: letter;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 11pt;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.6in 0.7in;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  /* ============ HEADER & FOOTER ============ */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9pt;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .page-header .brand { font-family: 'Cormorant Garamond', serif; font-size: 12pt; color: var(--forest); text-transform: none; letter-spacing: 0.3px; font-weight: 600; font-style: italic; }
+
+  .page-footer {
+    position: absolute;
+    bottom: 0.5in;
+    left: 0.85in;
+    right: 0.85in;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Outfit', sans-serif;
+    font-size: 8pt;
+    color: var(--faded);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  /* ============ COVER ============ */
+  .cover {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 11in;
+    padding: 1in 1in;
+  }
+
+  .cover-mark {
+    align-self: flex-start;
+  }
+
+  .cover-mark svg { width: 100px; height: 100px; }
+
+  .cover-content {
+    margin-top: auto;
+    margin-bottom: 0.5in;
+  }
+
+  .cover-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--earth);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .cover-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64pt;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+
+  .cover-title em {
+    color: var(--forest);
+    font-style: italic;
+  }
+
+  .cover-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22pt;
+    font-style: italic;
+    color: var(--earth);
+    margin-top: 36px;
+    font-weight: 400;
+  }
+
+  .cover-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 2px solid var(--forest);
+    padding-top: 18px;
+    margin-top: 60px;
+  }
+
+  .cover-meta div { font-size: 9pt; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .cover-meta strong { font-weight: 500; color: var(--ink); display: block; font-size: 10pt; margin-bottom: 2px; letter-spacing: 0; text-transform: none; }
+
+  /* ============ HEADINGS ============ */
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32pt;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  h1 + .lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14pt;
+    font-style: italic;
+    color: var(--earth);
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18pt;
+    font-weight: 600;
+    color: var(--forest);
+    margin-top: 22px;
+    margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+
+  h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--earth);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 10px;
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 10.5pt;
+  }
+
+  p.muted { color: var(--muted); }
+
+  .small { font-size: 9.5pt; line-height: 1.6; }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0 24px;
+  }
+
+  /* ============ LOGO SECTION ============ */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .logo-cell {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 130px;
+    background: var(--warm-white);
+  }
+  .logo-cell.dark { background: var(--ink); border-color: var(--ink); }
+  .logo-cell.forest { background: var(--forest); border-color: var(--forest); }
+  .logo-cell svg { max-width: 100%; max-height: 90px; }
+
+  .logo-caption {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: -8px;
+    margin-bottom: 16px;
+  }
+
+  /* ============ COLOR PALETTE ============ */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 12px 0 18px;
+  }
+
+  .color-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: white;
+    page-break-inside: avoid;
+  }
+
+  .color-swatch {
+    height: 56px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13pt;
+    font-weight: 600;
+  }
+
+  .color-swatch.dark-text { color: var(--ink); }
+
+  .color-info {
+    padding: 8px 12px 10px;
+    background: var(--warm-white);
+    font-size: 8.5pt;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .color-info .hex {
+    font-family: 'Outfit', monospace;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    font-size: 8pt;
+  }
+
+  .color-info .role {
+    font-size: 7.5pt;
+    color: var(--faded);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  /* ============ TYPOGRAPHY SPECIMEN ============ */
+  .type-specimen {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+    background: var(--warm-white);
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+  }
+
+  .type-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--earth);
+    margin-bottom: 3px;
+  }
+
+  .type-meta {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8.5pt;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .type-display-serif {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44pt;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .type-display-sans {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32pt;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .type-weights {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .type-weights.sans { font-family: 'Outfit', sans-serif; font-size: 11pt; }
+
+  /* ============ TWO-COL ============ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 20px;
+  }
+
+  /* ============ DO/DONT ============ */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .principle-box {
+    padding: 11px 16px;
+    border-radius: 6px;
+    margin-bottom: 0;
+    page-break-inside: avoid;
+  }
+
+  .principle-box.do {
+    background: rgba(61, 107, 79, 0.08);
+    border-left: 3px solid var(--forest);
+  }
+
+  .principle-box.dont {
+    background: rgba(192, 57, 43, 0.06);
+    border-left: 3px solid #C0392B;
+  }
+
+  .principle-box .label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .principle-box.do .label { color: var(--forest); }
+  .principle-box.dont .label { color: #C0392B; }
+
+  .principle-box p { margin-bottom: 0; font-size: 9.5pt; line-height: 1.5; }
+
+  /* ============ VOICE EXAMPLES ============ */
+  .voice-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 8px;
+    page-break-inside: avoid;
+  }
+
+  .voice-cell {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    line-height: 1.45;
+  }
+
+  .voice-cell.bad {
+    background: rgba(192, 57, 43, 0.06);
+    border-left: 3px solid #C0392B;
+    color: var(--muted);
+  }
+
+  .voice-cell.good {
+    background: rgba(61, 107, 79, 0.08);
+    border-left: 3px solid var(--forest);
+    color: var(--ink);
+  }
+
+  .voice-cell .tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .voice-cell.bad .tag { color: #C0392B; }
+  .voice-cell.good .tag { color: var(--forest); }
+
+  /* ============ TOC ============ */
+  .toc {
+    list-style: none;
+    margin-top: 30px;
+  }
+
+  .toc li {
+    display: flex;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .toc .toc-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9pt;
+    color: var(--earth);
+    letter-spacing: 2px;
+    width: 50px;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .toc .toc-title {
+    font-size: 18pt;
+    color: var(--ink);
+    flex-grow: 1;
+    font-weight: 500;
+  }
+
+  .toc .toc-page {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10pt;
+    color: var(--muted);
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-block {
+    margin-top: 40px;
+    padding: 32px;
+    background: var(--warm-white);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .contact-block h2 { margin-top: 0; }
+  .contact-block p { margin-bottom: 8px; }
+  .contact-block a { color: var(--forest); text-decoration: none; font-weight: 500; }
+
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="page cover">
+  <div class="cover-mark">
+    <svg viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+      <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+      <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+      <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+      <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+      <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+      <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+      <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+    </svg>
+  </div>
+
+  <div class="cover-content">
+    <div class="cover-eyebrow">Brand Guidelines</div>
+    <div class="cover-title">Freyja<br>Labs<em>.</em></div>
+    <div class="cover-tagline">Where growth begins.</div>
+
+    <div class="cover-meta">
+      <div><strong>Version 1.0</strong>May 2026</div>
+      <div><strong>freyjalabs.com</strong>Freyja Laboratory LLC</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TABLE OF CONTENTS ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>Brand Guidelines</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Contents</h1>
+  <p class="lede">A reference for everyone who creates on behalf of Freyja Labs.</p>
+
+  <ul class="toc">
+    <li><span class="toc-num">01</span><span class="toc-title">The brand</span><span class="toc-page">03</span></li>
+    <li><span class="toc-num">02</span><span class="toc-title">The mark</span><span class="toc-page">04</span></li>
+    <li><span class="toc-num">03</span><span class="toc-title">Logo system</span><span class="toc-page">05</span></li>
+    <li><span class="toc-num">04</span><span class="toc-title">Clear space &amp; misuse</span><span class="toc-page">06</span></li>
+    <li><span class="toc-num">05</span><span class="toc-title">Color</span><span class="toc-page">07</span></li>
+    <li><span class="toc-num">06</span><span class="toc-title">Typography</span><span class="toc-page">08</span></li>
+    <li><span class="toc-num">07</span><span class="toc-title">Voice &amp; tone</span><span class="toc-page">09</span></li>
+    <li><span class="toc-num">08</span><span class="toc-title">Asset index &amp; contact</span><span class="toc-page">10</span></li>
+  </ul>
+
+  <div class="page-footer"><span>Contents</span><span>02</span></div>
+</div>
+
+<!-- ===================== 01 THE BRAND ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>01 · The Brand</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>The brand.</h1>
+  <p class="lede">Freyja Labs is a national consulting firm delivering customized, hands-on professional development.</p>
+
+  <h2>Who we are</h2>
+  <p>Freyja Labs designs and delivers professional development for school districts, schools, non-traditional education spaces, and corporate partners. Every engagement is tailored to the audience and built on a "small tell, lots of do" philosophy &mdash; participants build, test, and iterate rather than passively receive information.</p>
+
+  <h2>The name</h2>
+  <p>Freyja is the Norse goddess of wisdom, foresight, and transformation &mdash; a figure who bridges worlds and enables others to see further. "Labs" signals experimentation, active work, and a maker-oriented approach. Together, the name communicates wisdom applied through hands-on practice.</p>
+
+  <h2>The mark</h2>
+  <p>Our mark is a meristem &mdash; the growth zone at the tip of every plant where new cells originate. Five primordia spiral around a central node, each at a different stage of development. The asymmetry is intentional: growth is uneven, directional, and never complete.</p>
+
+  <h2>What we promise</h2>
+  <p>Tailored to the audience. Hands-on by design. Research-grounded. Ahead of the curve. These are not features but commitments &mdash; every deliverable that carries the Freyja Labs name should be measurable against them.</p>
+
+  <div class="page-footer"><span>The Brand</span><span>03</span></div>
+</div>
+
+<!-- ===================== 02 THE MARK ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>02 · The Mark</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>The mark.</h1>
+  <p class="lede">A meristem in cross-section. Five primordia, one growing point, and the breath of asymmetry that makes it alive.</p>
+
+  <div style="display: flex; align-items: center; justify-content: center; padding: 40px 0;">
+    <svg viewBox="0 0 200 200" width="280" height="280">
+      <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+      <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+      <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+      <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+      <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+      <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+      <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+      <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+    </svg>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3>Construction</h3>
+      <p class="small">Eight elements: a forest disc anchoring the composition, five elliptical primordia spiraling around it, and a layered focal point at the center. The smallest, most opaque leaf sits at twelve o'clock; the largest, most translucent at nine. The upper-left quadrant is intentionally empty &mdash; that gap is what gives the mark its directional energy.</p>
+    </div>
+    <div>
+      <h3>Why this mark</h3>
+      <p class="small">A meristem is where every new cell of a plant originates. It is the literal location of growth. The mark says &mdash; without words &mdash; what the brand promises: tailored, ongoing, organic development. The asymmetry signals that growth is never finished and never identical from one engagement to the next.</p>
+    </div>
+  </div>
+
+  <div class="page-footer"><span>The Mark</span><span>04</span></div>
+</div>
+
+<!-- ===================== 03 LOGO SYSTEM ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>03 · Logo System</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Logo system.</h1>
+  <p class="lede">Three forms, two color treatments, calibrated for every context.</p>
+
+  <h3>Mark only</h3>
+  <div class="logo-grid">
+    <div class="logo-cell">
+      <svg viewBox="0 0 200 200" style="height: 90px;">
+        <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+        <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+        <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+        <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+        <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+        <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+        <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+        <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+      </svg>
+    </div>
+    <div class="logo-cell dark">
+      <svg viewBox="0 0 200 200" style="height: 90px;">
+        <circle cx="100" cy="100" r="15" fill="#FFFFFF"/>
+        <ellipse cx="100" cy="70" rx="18" ry="10" fill="#FFFFFF" opacity="0.85" transform="rotate(-15 100 70)"/>
+        <ellipse cx="130" cy="85" rx="20" ry="11" fill="#FFFFFF" opacity="0.7" transform="rotate(50 130 85)"/>
+        <ellipse cx="125" cy="125" rx="22" ry="12" fill="#FFFFFF" opacity="0.55" transform="rotate(115 125 125)"/>
+        <ellipse cx="85" cy="135" rx="25" ry="12" fill="#FFFFFF" opacity="0.4" transform="rotate(180 85 135)"/>
+        <ellipse cx="65" cy="100" rx="25" ry="12" fill="#FFFFFF" opacity="0.3" transform="rotate(245 65 100)"/>
+        <circle cx="100" cy="100" r="8" fill="#2A4E38"/>
+        <circle cx="100" cy="100" r="4" fill="#FFFFFF"/>
+      </svg>
+    </div>
+  </div>
+  <div class="logo-caption" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;"><span>Color · light backgrounds</span><span>Reversed · dark backgrounds</span></div>
+
+  <h3>Horizontal lockup</h3>
+  <div class="logo-grid">
+    <div class="logo-cell">
+      <svg viewBox="0 0 520 120" style="height: 75px;">
+        <g transform="translate(10, 10) scale(0.5)">
+          <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+          <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+          <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+          <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+          <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+          <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+          <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+          <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+        </g>
+        <text x="135" y="80" font-family="Cormorant Garamond, Georgia, serif" font-size="60" font-weight="600" fill="#3D6B4F">Freyja Labs</text>
+      </svg>
+    </div>
+    <div class="logo-cell dark">
+      <svg viewBox="0 0 520 120" style="height: 75px;">
+        <g transform="translate(10, 10) scale(0.5)">
+          <circle cx="100" cy="100" r="15" fill="#FFFFFF"/>
+          <ellipse cx="100" cy="70" rx="18" ry="10" fill="#FFFFFF" opacity="0.85" transform="rotate(-15 100 70)"/>
+          <ellipse cx="130" cy="85" rx="20" ry="11" fill="#FFFFFF" opacity="0.7" transform="rotate(50 130 85)"/>
+          <ellipse cx="125" cy="125" rx="22" ry="12" fill="#FFFFFF" opacity="0.55" transform="rotate(115 125 125)"/>
+          <ellipse cx="85" cy="135" rx="25" ry="12" fill="#FFFFFF" opacity="0.4" transform="rotate(180 85 135)"/>
+          <ellipse cx="65" cy="100" rx="25" ry="12" fill="#FFFFFF" opacity="0.3" transform="rotate(245 65 100)"/>
+          <circle cx="100" cy="100" r="8" fill="#2A4E38"/>
+          <circle cx="100" cy="100" r="4" fill="#FFFFFF"/>
+        </g>
+        <text x="135" y="80" font-family="Cormorant Garamond, Georgia, serif" font-size="60" font-weight="600" fill="#FFFFFF">Freyja Labs</text>
+      </svg>
+    </div>
+  </div>
+  <div class="logo-caption" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;"><span>Color · light backgrounds</span><span>Reversed · dark backgrounds</span></div>
+
+  <h3>When to use which</h3>
+  <p class="small"><strong style="color: var(--forest);">Lockup</strong> for any first-impression context: website headers, business cards, letterhead, presentation cover slides, social media banners. Lead with the full lockup whenever the brand is being introduced.</p>
+  <p class="small"><strong style="color: var(--forest);">Mark only</strong> for repeat-impression and small contexts: favicons, app icons, social profile pictures, email signature, footer return marks, embroidery, watermarks, or any time the lockup would feel redundant or won't fit at legible size.</p>
+
+  <div class="page-footer"><span>Logo System</span><span>05</span></div>
+</div>
+
+<!-- ===================== 04 CLEAR SPACE & MISUSE ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>04 · Clear Space &amp; Misuse</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Clear space &amp; misuse.</h1>
+  <p class="lede">The mark needs room to breathe. These rules protect that.</p>
+
+  <h2>Minimum clear space</h2>
+  <p>Maintain clear space around the mark equal to the radius of its central forest disc. No competing elements &mdash; text, photography, other logos, or page edges &mdash; should encroach on this zone.</p>
+
+  <h2>Minimum size</h2>
+  <p>The mark renders cleanly at 16&times;16px (favicon size) using the simplified favicon variant. The full mark should not appear smaller than 24&times;24px on screen or 0.4 inches in print. The horizontal lockup should not appear smaller than 120px wide on screen or 1.25 inches in print.</p>
+
+  <hr class="rule">
+
+  <h2>Misuse</h2>
+
+  <div class="principles-grid">
+    <div class="principle-box dont">
+      <div class="label">Don't recolor the mark</div>
+      <p>Forest, sage, cream, and dark accent are non-negotiable. Don't tint the mark to match a host page or sponsor scheme. If the host palette can't accept brand colors, use the white reversed mark on a dark forest background.</p>
+    </div>
+
+    <div class="principle-box dont">
+      <div class="label">Don't rotate, skew, or stretch</div>
+      <p>The asymmetric spiral has a specific orientation. Rotating it (even by 15&deg; for visual interest) breaks the composition. Preserve aspect ratio at all sizes.</p>
+    </div>
+
+    <div class="principle-box dont">
+      <div class="label">Don't add effects</div>
+      <p>No drop shadows, glows, gradients, outlines, or embossing. The mark is flat by design.</p>
+    </div>
+
+    <div class="principle-box dont">
+      <div class="label">Don't reconstruct or modify</div>
+      <p>Don't redraw leaves "cleaner" or symmetrically. Don't replace the central iris with a different motif. Don't add or remove primordia.</p>
+    </div>
+
+    <div class="principle-box do">
+      <div class="label">Do use the white version on dark</div>
+      <p>For dark backgrounds, photographs, or video, use the white reversed mark. Maintain enough contrast that the mark reads at a glance.</p>
+    </div>
+
+    <div class="principle-box do">
+      <div class="label">Do place on solid backgrounds</div>
+      <p>Keep the area immediately around the mark a single, solid color. Busy backgrounds, photography behind the mark, or patterned fills compromise legibility.</p>
+    </div>
+  </div>
+
+  <div class="page-footer"><span>Clear Space &amp; Misuse</span><span>06</span></div>
+</div>
+
+<!-- ===================== 05 COLOR ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>05 · Color</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Color.</h1>
+  <p class="lede">A grounded palette drawn from natural materials &mdash; forest, clay, sand, aged paper.</p>
+
+  <h2>Primary</h2>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #3D6B4F;">Forest</div>
+      <div class="color-info">
+        <div class="role">Primary</div>
+        <div class="hex">HEX #3D6B4F &nbsp;·&nbsp; RGB 61, 107, 79 &nbsp;·&nbsp; CMYK 65, 28, 70, 25</div>
+        <div style="margin-top: 6px;">Headings, CTAs, brand mark, headlines.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #2A4E38;">Forest Dark</div>
+      <div class="color-info">
+        <div class="role">Hover &amp; Depth</div>
+        <div class="hex">HEX #2A4E38 &nbsp;·&nbsp; RGB 42, 78, 56 &nbsp;·&nbsp; CMYK 75, 32, 80, 50</div>
+        <div style="margin-top: 6px;">Button hovers, active states, accent shadows.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #5A8E6D;">Forest Light</div>
+      <div class="color-info">
+        <div class="role">Accent</div>
+        <div class="hex">HEX #5A8E6D &nbsp;·&nbsp; RGB 90, 142, 109 &nbsp;·&nbsp; CMYK 55, 18, 60, 18</div>
+        <div style="margin-top: 6px;">Primordia leaves, subtle accents, tags.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #6B5B3E;">Earth</div>
+      <div class="color-info">
+        <div class="role">Secondary</div>
+        <div class="hex">HEX #6B5B3E &nbsp;·&nbsp; RGB 107, 91, 62 &nbsp;·&nbsp; CMYK 35, 42, 75, 35</div>
+        <div style="margin-top: 6px;">Subheadings, italic accents, eyebrow text.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Neutrals</h2>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch dark-text" style="background: #FAF7F2; border-bottom: 1px solid var(--border);">Cream</div>
+      <div class="color-info">
+        <div class="role">Page Background</div>
+        <div class="hex">HEX #FAF7F2 &nbsp;·&nbsp; RGB 250, 247, 242 &nbsp;·&nbsp; CMYK 1, 2, 4, 0</div>
+        <div style="margin-top: 6px;">Primary page background.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch dark-text" style="background: #FFFEF9; border-bottom: 1px solid var(--border);">Warm White</div>
+      <div class="color-info">
+        <div class="role">Surface</div>
+        <div class="hex">HEX #FFFEF9 &nbsp;·&nbsp; RGB 255, 254, 249 &nbsp;·&nbsp; CMYK 0, 0, 2, 0</div>
+        <div style="margin-top: 6px;">Cards, panels, raised surfaces.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #1C1C1C;">Ink</div>
+      <div class="color-info">
+        <div class="role">Body Text</div>
+        <div class="hex">HEX #1C1C1C &nbsp;·&nbsp; RGB 28, 28, 28 &nbsp;·&nbsp; CMYK 70, 65, 65, 75</div>
+        <div style="margin-top: 6px;">Primary body copy.</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #5A5A5A;">Muted</div>
+      <div class="color-info">
+        <div class="role">Secondary Text</div>
+        <div class="hex">HEX #5A5A5A &nbsp;·&nbsp; RGB 90, 90, 90 &nbsp;·&nbsp; CMYK 55, 45, 45, 30</div>
+        <div style="margin-top: 6px;">Captions, metadata, supporting copy.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="small"><strong>Pairing rules.</strong> Forest on cream is the workhorse pairing &mdash; use it for headings, CTAs, and brand moments. Earth on cream for italic accents. White or cream on forest dark for reversed contexts. Avoid placing forest light directly adjacent to forest &mdash; the contrast is too subtle to be intentional.</p>
+
+  <div class="page-footer"><span>Color</span><span>07</span></div>
+</div>
+
+<!-- ===================== 06 TYPOGRAPHY ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>06 · Typography</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Typography.</h1>
+  <p class="lede">A serif and a sans, paired to communicate established authority and modern clarity.</p>
+
+  <div class="type-specimen">
+    <div class="type-name">Display &amp; Editorial</div>
+    <div class="type-meta">Cormorant Garamond &nbsp;·&nbsp; Garalde serif &nbsp;·&nbsp; Christian Thalmann &nbsp;·&nbsp; SIL Open Font License</div>
+    <div class="type-display-serif">Aa Bb Cc</div>
+    <div class="type-weights">
+      <em style="font-weight: 400;">Regular &mdash; running editorial body</em><br>
+      <span style="font-weight: 500;">Medium &mdash; subheads &amp; pull quotes</span><br>
+      <strong style="font-weight: 600;">Semibold &mdash; primary display headings</strong>
+    </div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-name">UI &amp; Body</div>
+    <div class="type-meta">Outfit &nbsp;·&nbsp; Geometric sans &nbsp;·&nbsp; Indian Type Foundry &nbsp;·&nbsp; SIL Open Font License</div>
+    <div class="type-display-sans">Aa Bb Cc</div>
+    <div class="type-weights sans">
+      <span style="font-weight: 400;">Regular &mdash; UI body, descriptions, captions</span><br>
+      <span style="font-weight: 500;">Medium &mdash; UI labels, button text</span><br>
+      <strong style="font-weight: 600;">Semibold &mdash; navigation, emphasis, eyebrows</strong>
+    </div>
+  </div>
+
+  <h3>Pairing rules</h3>
+  <p class="small"><strong>Cormorant Garamond</strong> for headings, brand voice, pull quotes, and any moment that should feel considered or editorial. Use weight 500 or 600. Italic weight 400 is reserved for the tagline and pull quotes.</p>
+  <p class="small"><strong>Outfit</strong> for everything else: body text, navigation, buttons, captions, eyebrows, metadata. Use weight 400 for running text, 500 for emphasis, 600 for navigation labels and uppercase eyebrows.</p>
+  <p class="small"><strong>Sentence case</strong> on all headings. Reserve all-caps for short labels (eyebrows, navigation, button text) with letter-spacing of 1.5&ndash;2px.</p>
+
+  <h3>Fallbacks</h3>
+  <p class="small">When Cormorant Garamond isn't available: Georgia, Hoefler Text, "Times New Roman", serif. When Outfit isn't available: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif.</p>
+
+  <div class="page-footer"><span>Typography</span><span>08</span></div>
+</div>
+
+<!-- ===================== 07 VOICE & TONE ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>07 · Voice &amp; Tone</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Voice &amp; tone.</h1>
+  <p class="lede">Direct, evidence-first, warm but not soft. Confident without arrogance.</p>
+
+  <h2>Principles</h2>
+  <p><strong>Lead with what we do, not what we are.</strong> Verbs over nouns. "We design hands-on workshops" over "We are a hands-on workshop firm."</p>
+  <p><strong>Specific beats generic.</strong> "Three districts saw a 28% increase in CS course offerings" not "Many districts have benefited."</p>
+  <p><strong>Earn every word.</strong> Cut filler, intensifiers, and superlatives. If a sentence still works without "very," "really," "truly," or "absolutely" &mdash; cut them.</p>
+  <p><strong>Avoid jargon for jargon's sake.</strong> "Capacity building" is fine when it means something specific. "Synergize learning outcomes" is not.</p>
+
+  <h2>Voice examples</h2>
+
+  <div class="voice-row">
+    <div class="voice-cell bad">
+      <div class="tag">Avoid</div>
+      We are a passionate, innovative team committed to revolutionizing professional development through cutting-edge methodologies.
+    </div>
+    <div class="voice-cell good">
+      <div class="tag">Better</div>
+      We design professional development for school districts. Every engagement is built for the people in the room.
+    </div>
+  </div>
+
+  <div class="voice-row">
+    <div class="voice-cell bad">
+      <div class="tag">Avoid</div>
+      Our mission is to empower educators to unlock the potential of their students through transformative learning experiences.
+    </div>
+    <div class="voice-cell good">
+      <div class="tag">Better</div>
+      We help teachers do harder things better. The kind of work students remember, not the kind they forget.
+    </div>
+  </div>
+
+  <div class="voice-row">
+    <div class="voice-cell bad">
+      <div class="tag">Avoid</div>
+      Leveraging best-in-class research and evidence-based practices, we deliver high-impact solutions tailored to your unique context.
+    </div>
+    <div class="voice-cell good">
+      <div class="tag">Better</div>
+      Every design decision points to a citation. Every workshop is built for your district, not adapted from another one.
+    </div>
+  </div>
+
+  <h3>Words we use</h3>
+  <p class="small">Build. Design. Iterate. Test. Anchor. Tailor. Ground. Grow. Specific. Direct. Hands-on. Evidence. Practice. Context. Cohort. Cycle.</p>
+
+  <h3>Words we don't</h3>
+  <p class="small">Empower. Unlock. Revolutionary. Cutting-edge. Best-in-class. Synergy. Transform (alone, without specifics). Game-changing. World-class. Holistic. Stakeholder (when "team" or "people" works).</p>
+
+  <div class="page-footer"><span>Voice &amp; Tone</span><span>09</span></div>
+</div>
+
+<!-- ===================== 08 ASSET INDEX ===================== -->
+<div class="page">
+  <div class="page-header">
+    <span>08 · Asset Index &amp; Contact</span>
+    <span class="brand">Freyja Labs</span>
+  </div>
+
+  <h1>Asset index.</h1>
+  <p class="lede">Everything that lives in this brand kit, and what to use it for.</p>
+
+  <h2>Logos</h2>
+  <p class="small"><strong>SVG</strong> &mdash; for web, infinitely scalable. Use these wherever possible.<br>
+  <strong>PNG 256</strong> &mdash; email signature, small social uses, document inline.<br>
+  <strong>PNG 512</strong> &mdash; medium-format use, presentation slides.<br>
+  <strong>PNG 1024</strong> &mdash; large web hero, print at moderate sizes.<br>
+  <strong>PNG 2048</strong> &mdash; print at large sizes, banners, posters.<br>
+  <strong>Favicon set (16, 32, 48, 64, 192)</strong> &mdash; browser favicon, PWA icons.<br>
+  <strong>Apple touch icon (180)</strong> &mdash; iOS home screen.<br>
+  <strong>Android Chrome (192, 512)</strong> &mdash; Android PWA.</p>
+
+  <h2>Social</h2>
+  <p class="small"><strong>profile-square-1024</strong> &mdash; LinkedIn, X, Facebook, Instagram profile picture.<br>
+  <strong>profile-square-dark-1024</strong> &mdash; alternative for dark-themed contexts.<br>
+  <strong>linkedin-cover (1584&times;396)</strong> &mdash; LinkedIn company page banner.<br>
+  <strong>twitter-header (1500&times;500)</strong> &mdash; X/Twitter profile banner.<br>
+  <strong>og-image (1200&times;630)</strong> &mdash; Open Graph image for website link sharing. Place at <code>/public/og-image.png</code> on freyjalabs.com.</p>
+
+  <h2>Templates</h2>
+  <p class="small"><strong>letterhead.docx</strong> &mdash; Word template for formal correspondence. Logo and footer pre-configured; replace placeholders before sending.<br>
+  <strong>email-signature.html / -andrea.html</strong> &mdash; HTML email signatures for Mike and Andrea. Open in browser, copy, paste into email client.<br>
+  <strong>one-pager.docx</strong> &mdash; Capabilities sheet template for sales conversations.<br>
+  <strong>business-card.pdf</strong> &mdash; Print-ready business card design (3.5&times;2 inches).</p>
+
+  <div class="contact-block">
+    <h2 style="margin-top: 0;">Questions or new asset requests?</h2>
+    <p>This kit will grow as the brand grows. If something is missing &mdash; a deck template, a proposal template, a one-off social graphic &mdash; or if you spot a misuse in the wild that the guidelines don't cover yet, write it down.</p>
+    <p style="margin-top: 16px;"><strong>hello@freyjalabs.com</strong> &nbsp;·&nbsp; <a href="https://freyjalabs.com">freyjalabs.com</a></p>
+  </div>
+
+  <div class="page-footer"><span>Asset Index</span><span>10</span></div>
+</div>
+
+</body>
+</html>

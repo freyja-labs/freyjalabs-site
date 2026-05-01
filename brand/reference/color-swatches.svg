@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720">
+<rect width="1200" height="720" fill="#FAF7F2"/>
+<text x="40" y="74" font-family="Cormorant Garamond, Georgia, serif" font-size="32" font-weight="600" fill="#3D6B4F">Freyja Labs</text>
+<text x="40" y="98" font-family="Outfit, sans-serif" font-size="13" fill="#6B5B3E" letter-spacing="2">COLOR PALETTE</text>
+<rect x="40" y="120" width="211" height="272" fill="#3D6B4F" rx="8"/>
+<text x="58" y="342" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Forest</text>
+<text x="58" y="362" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">PRIMARY</text>
+<text x="58" y="380" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#3D6B4F</text>
+<rect x="267" y="120" width="211" height="272" fill="#2A4E38" rx="8"/>
+<text x="285" y="342" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Forest Dark</text>
+<text x="285" y="362" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">HOVER &amp; DEPTH</text>
+<text x="285" y="380" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#2A4E38</text>
+<rect x="494" y="120" width="211" height="272" fill="#5A8E6D" rx="8"/>
+<text x="512" y="342" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Forest Light</text>
+<text x="512" y="362" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">ACCENT</text>
+<text x="512" y="380" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#5A8E6D</text>
+<rect x="721" y="120" width="211" height="272" fill="#6B5B3E" rx="8"/>
+<text x="739" y="342" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Earth</text>
+<text x="739" y="362" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">SECONDARY</text>
+<text x="739" y="380" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#6B5B3E</text>
+<rect x="948" y="120" width="211" height="272" fill="#FAF7F2" rx="8" stroke="#DDD5C8" stroke-width="1"/>
+<text x="966" y="342" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#1C1C1C">Cream</text>
+<text x="966" y="362" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#5A5A5A" opacity="0.85">PAGE BACKGROUND</text>
+<text x="966" y="380" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#1C1C1C">#FAF7F2</text>
+<rect x="40" y="408" width="211" height="272" fill="#FFFEF9" rx="8" stroke="#DDD5C8" stroke-width="1"/>
+<text x="58" y="630" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#1C1C1C">Warm White</text>
+<text x="58" y="650" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#5A5A5A" opacity="0.85">SURFACE</text>
+<text x="58" y="668" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#1C1C1C">#FFFEF9</text>
+<rect x="267" y="408" width="211" height="272" fill="#D4C5A9" rx="8" stroke="#DDD5C8" stroke-width="1"/>
+<text x="285" y="630" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#1C1C1C">Sand</text>
+<text x="285" y="650" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#5A5A5A" opacity="0.85">DECORATIVE</text>
+<text x="285" y="668" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#1C1C1C">#D4C5A9</text>
+<rect x="494" y="408" width="211" height="272" fill="#DDD5C8" rx="8" stroke="#DDD5C8" stroke-width="1"/>
+<text x="512" y="630" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#1C1C1C">Border</text>
+<text x="512" y="650" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#5A5A5A" opacity="0.85">BORDER</text>
+<text x="512" y="668" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#1C1C1C">#DDD5C8</text>
+<rect x="721" y="408" width="211" height="272" fill="#1C1C1C" rx="8"/>
+<text x="739" y="630" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Ink</text>
+<text x="739" y="650" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">BODY TEXT</text>
+<text x="739" y="668" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#1C1C1C</text>
+<rect x="948" y="408" width="211" height="272" fill="#5A5A5A" rx="8"/>
+<text x="966" y="630" font-family="Cormorant Garamond, Georgia, serif" font-size="22" font-weight="600" fill="#FFFFFF">Muted</text>
+<text x="966" y="650" font-family="Outfit, sans-serif" font-size="10" letter-spacing="1.5" fill="#FFFFFF" opacity="0.85">SECONDARY TEXT</text>
+<text x="966" y="668" font-family="JetBrains Mono, monospace" font-size="11" font-weight="500" fill="#FFFFFF">#5A5A5A</text>
+</svg>

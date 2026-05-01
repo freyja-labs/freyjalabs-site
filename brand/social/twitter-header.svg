@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500">
+  <defs>
+    <pattern id="dots2" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="#5A8E6D" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="1500" height="500" fill="#FAF7F2"/>
+  <rect width="1500" height="500" fill="url(#dots2)"/>
+
+  <!-- Large mark, right-aligned -->
+  <g transform="translate(1100, 110) scale(2.5)">
+    <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+    <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+    <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+    <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+    <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+    <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+    <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+    <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+  </g>
+
+  <!-- Wordmark + tagline, left -->
+  <text x="100" y="220" font-family="Cormorant Garamond, Georgia, serif" font-size="96" font-weight="600" fill="#3D6B4F">Freyja Labs</text>
+  <text x="100" y="280" font-family="Cormorant Garamond, Georgia, serif" font-size="40" font-style="italic" fill="#6B5B3E">Where growth begins.</text>
+  <line x1="100" y1="320" x2="240" y2="320" stroke="#3D6B4F" stroke-width="2"/>
+  <text x="100" y="360" font-family="Outfit, sans-serif" font-size="22" font-weight="400" fill="#1C1C1C" letter-spacing="1">Professional development for school districts and organizations</text>
+</svg>

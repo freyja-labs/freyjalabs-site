@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Freyja Labs — Capabilities</title>
+<style>
+  :root {
+    --forest: #3D6B4F;
+    --forest-dark: #2A4E38;
+    --forest-light: #5A8E6D;
+    --earth: #6B5B3E;
+    --cream: #FAF7F2;
+    --warm-white: #FFFEF9;
+    --ink: #1C1C1C;
+    --muted: #5A5A5A;
+    --faded: #8A8A8A;
+    --border: #DDD5C8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: letter;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 10pt;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    padding: 0.45in 0.55in;
+    page-break-after: always;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  /* ============ HEADER ============ */
+  .doc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--forest);
+  }
+
+  .doc-header .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .doc-header svg { width: 50px; height: 50px; flex-shrink: 0; }
+
+  .doc-header .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24pt;
+    font-weight: 600;
+    color: var(--forest);
+    line-height: 1;
+  }
+
+  .doc-header .wordmark .tagline {
+    display: block;
+    font-size: 10pt;
+    font-style: italic;
+    color: var(--earth);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .doc-meta {
+    text-align: right;
+    font-size: 8.5pt;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .doc-meta strong { color: var(--ink); display: block; font-weight: 500; }
+  .doc-meta .label {
+    font-size: 7.5pt;
+    color: var(--faded);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1px;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    margin-bottom: 16px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26pt;
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 em {
+    color: var(--forest);
+    font-style: italic;
+  }
+
+  .hero .subtitle {
+    font-size: 10pt;
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 6.2in;
+  }
+
+  /* ============ DIFFERENTIATORS ============ */
+  .differentiators {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .diff-card {
+    padding: 9px 11px;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    border-top: 3px solid var(--forest);
+  }
+
+  .diff-card .num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7pt;
+    color: var(--forest);
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+  }
+
+  .diff-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12.5pt;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 3px;
+    line-height: 1.1;
+  }
+
+  .diff-card p {
+    font-size: 8pt;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  /* ============ SERVICES TABLE ============ */
+  section.services {
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: var(--earth);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .services-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+  }
+
+  .services-table th, .services-table td {
+    text-align: left;
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .services-table th {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7pt;
+    font-weight: 600;
+    color: var(--forest);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(61, 107, 79, 0.05);
+    border-bottom: 2px solid var(--forest);
+  }
+
+  .services-table .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--forest);
+    width: 1.4in;
+  }
+
+  .services-table .description {
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  .services-table .price {
+    font-family: 'Outfit', sans-serif;
+    color: var(--earth);
+    font-weight: 500;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ TWO-COL FOOTER ============ */
+  .doc-bottom {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .who h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14pt;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+
+  .founders {
+    display: flex;
+    gap: 12px;
+  }
+
+  .founder {
+    flex: 1;
+    font-size: 8.5pt;
+    line-height: 1.45;
+  }
+
+  .founder .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1px;
+    line-height: 1.1;
+  }
+
+  .founder .title {
+    font-size: 7pt;
+    color: var(--earth);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .founder .credentials {
+    color: var(--muted);
+    font-size: 8pt;
+    line-height: 1.45;
+  }
+
+  .contact-block {
+    background: var(--forest);
+    color: white;
+    padding: 14px 16px;
+    border-radius: 6px;
+    align-self: stretch;
+  }
+
+  .contact-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14pt;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+
+  .contact-block .contact-line {
+    font-size: 9pt;
+    margin-bottom: 3px;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .contact-block .contact-line strong {
+    display: block;
+    font-size: 6.5pt;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-bottom: 1px;
+  }
+
+  .contact-block .contact-line:first-of-type strong { margin-top: 0; }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="brand">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="15" fill="#3D6B4F"/>
+        <ellipse cx="100" cy="70" rx="18" ry="10" fill="#5A8E6D" opacity="0.85" transform="rotate(-15 100 70)"/>
+        <ellipse cx="130" cy="85" rx="20" ry="11" fill="#5A8E6D" opacity="0.75" transform="rotate(50 130 85)"/>
+        <ellipse cx="125" cy="125" rx="22" ry="12" fill="#5A8E6D" opacity="0.65" transform="rotate(115 125 125)"/>
+        <ellipse cx="85" cy="135" rx="25" ry="12" fill="#5A8E6D" opacity="0.55" transform="rotate(180 85 135)"/>
+        <ellipse cx="65" cy="100" rx="25" ry="12" fill="#5A8E6D" opacity="0.45" transform="rotate(245 65 100)"/>
+        <circle cx="100" cy="100" r="8" fill="#FAF7F2"/>
+        <circle cx="100" cy="100" r="4" fill="#3D6B4F"/>
+      </svg>
+      <div class="wordmark">
+        Freyja Labs
+        <span class="tagline">Where growth begins.</span>
+      </div>
+    </div>
+    <div class="doc-meta">
+      <div class="label">Capabilities</div>
+      <strong>Professional Development<br>for Schools &amp; Organizations</strong>
+      <div style="margin-top: 8px;">freyjalabs.com</div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">Custom-built · Hands-on · Research-grounded</div>
+    <h1>Professional development<br>that earns the time it asks for.</h1>
+    <p class="subtitle">Freyja Labs designs and delivers customized professional development for school districts, schools, and organizations. Every engagement is tailored to the audience and built on a "small tell, lots of do" philosophy. We've been integrating computing, AI literacy, and STEM long before the policy mandates &mdash; our clients access the thinking that will matter next, not last year.</p>
+  </div>
+
+  <!-- Four differentiators -->
+  <div class="differentiators">
+    <div class="diff-card">
+      <div class="num">01</div>
+      <h3>Tailored to you</h3>
+      <p>Every engagement begins with your context. We design from the ground up. Nothing is off the shelf.</p>
+    </div>
+    <div class="diff-card">
+      <div class="num">02</div>
+      <h3>Hands-on by design</h3>
+      <p>Participants build, test, and iterate. The ratio of doing to listening is intentional &mdash; and non-negotiable.</p>
+    </div>
+    <div class="diff-card">
+      <div class="num">03</div>
+      <h3>Research-grounded</h3>
+      <p>Both founders are active researchers with funded projects and current publications. Evidence, not platitudes.</p>
+    </div>
+    <div class="diff-card">
+      <div class="num">04</div>
+      <h3>Ahead of the curve</h3>
+      <p>CS integration, AI literacy, computational modeling &mdash; we taught these before they were mandates.</p>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="services">
+    <div class="section-label">Services &amp; Engagement Models</div>
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th style="width: 1.5in;">Service</th>
+          <th>What it includes</th>
+          <th style="width: 1.4in; text-align: right;">Investment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="service-name">Custom Workshops</td>
+          <td class="description">Multi-day, on-site, hands-on. Built from the ground up for your teachers, your context, your standards. Topics: STEM integration, AI literacy, computational thinking, curriculum alignment.</td>
+          <td class="price">$5,000&ndash;$25,000</td>
+        </tr>
+        <tr>
+          <td class="service-name">District Consulting</td>
+          <td class="description">Long-term strategic partnerships (6&ndash;12 months). Needs assessment, strategic planning, implementation coaching, evaluation. For districts pursuing systemic STEM, CS, or AI integration.</td>
+          <td class="price">$25,000&ndash;$75,000+</td>
+        </tr>
+        <tr>
+          <td class="service-name">Train-the-Trainer</td>
+          <td class="description">Licensed facilitator-ready PD modules with guides, materials, and certification. Build internal capacity that sustains beyond our engagement.</td>
+          <td class="price">$15,000&ndash;$40,000</td>
+        </tr>
+        <tr>
+          <td class="service-name">Virtual &amp; Hybrid</td>
+          <td class="description">90-minute to full-day virtual sessions and asynchronous modules with optional live coaching. Same hands-on philosophy, remote format.</td>
+          <td class="price">$2,000&ndash;$8,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Bottom: founders + contact -->
+  <div class="doc-bottom">
+    <div class="who">
+      <h2>Who we are.</h2>
+      <div class="founders">
+        <div class="founder">
+          <div class="name">Mike Borowczak, Ph.D.</div>
+          <div class="title">Co-Founder</div>
+          <div class="credentials">Hardware security researcher. Directs a 50-member research lab with $8M+ in funded projects. Editor-in-Chief of an engineering education journal.</div>
+        </div>
+        <div class="founder">
+          <div class="name">Andrea C. Burrows Borowczak, Ed.D.</div>
+          <div class="title">Co-Founder</div>
+          <div class="credentials">STEM education scholar. Directs a school of teacher education at a major research university. NSF principal investigator on multiple education research projects.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <h2>Let's talk.</h2>
+      <div class="contact-line"><strong>Email</strong>hello@freyjalabs.com</div>
+      <div class="contact-line"><strong>Web</strong>freyjalabs.com</div>
+      <div class="contact-line"><strong>LLC</strong>Freyja Laboratory LLC</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
