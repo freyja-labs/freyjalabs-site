@@ -15,9 +15,9 @@ The founders are Mike Borowczak, Ph.D. (hardware security researcher, engineerin
 | Framework | **Astro** (latest stable) | Content-driven, zero JS by default, markdown-first, fast builds |
 | Styling | **Tailwind CSS v4** | Utility-first, design token consistency, rapid iteration |
 | Content | **Astro Content Collections** (Markdown/MDX) | Type-safe, file-based content that non-developers can edit |
-| Forms | **Formspree** or **Netlify Forms** | Zero-backend contact form |
-| Deployment | **Netlify** via GitHub integration | Auto-deploy on push to `main`, preview deploys on PRs |
-| Domain | `freyjalabs.com` (already owned) | DNS configured to point at Netlify |
+| Forms | **Formspree** | Zero-backend contact form |
+| Deployment | **GitHub Pages** via GitHub Actions | Auto-deploy on push to `main` |
+| Domain | `freyjalabs.com` (already owned) | DNS configured to point at GitHub Pages |
 
 ### Why Astro over Jekyll/Hugo/Next.js
 
@@ -162,7 +162,7 @@ Deeper explanation of the Freyja Labs methodology. NOT a sales page — this is 
 
 #### Contact (`/contact`)
 
-- Contact form (Formspree or Netlify Forms): Name, email, organization, role, message, optional "How did you hear about us?" dropdown.
+- Contact form (Formspree): Name, email, organization, role, message, optional "How did you hear about us?" dropdown.
 - Direct email: `hello@freyjalabs.com`
 - Optional: Calendly embed for scheduling an intro call (scaffold the embed slot even if not ready at launch).
 - No phone number at launch.
@@ -223,7 +223,7 @@ src/
 │   │   ├── Button.astro         — Primary/secondary/light variants
 │   │   ├── SectionLabel.astro   — Monospace uppercase label
 │   │   ├── Card.astro           — Reusable card with hover state
-│   │   └── ContactForm.astro    — Form with Formspree/Netlify integration
+│   │   └── ContactForm.astro    — Form with Formspree integration
 │   ├── home/
 │   │   ├── Hero.astro
 │   │   ├── PhilosophyGrid.astro
@@ -321,45 +321,53 @@ Generate an OG image (1200x630) using the brand palette: cream background, "Frey
 
 ## Deployment Configuration
 
-### Netlify
+### GitHub Pages (via GitHub Actions)
 
-```toml
-# netlify.toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[build.environment]
-  NODE_VERSION = "20"
-
-[[redirects]]
-  from = "/*"
-  to = "/404"
-  status = 404
-```
-
-### GitHub Actions (alternative if using GitHub Pages)
+The site deploys to GitHub Pages on every push to `main`. The workflow at `.github/workflows/deploy.yml` uses the official `withastro/action` to build and `actions/deploy-pages` to publish.
 
 ```yaml
 # .github/workflows/deploy.yml
-name: Deploy
+name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm ci
-      - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: withastro/action@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          node-version: 20
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
 ```
+
+### Custom domain
+
+`public/CNAME` contains `freyjalabs.com` so the custom domain persists across deploys. One-time setup in the GitHub repo:
+
+1. **Settings → Pages → Source: `GitHub Actions`**
+2. **Settings → Pages → Custom domain: `freyjalabs.com`**, then enable **Enforce HTTPS** once the cert provisions
+3. DNS for `freyjalabs.com`:
+   - `A` apex → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `AAAA` apex → `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - `CNAME www` → `freyja-labs.github.io`
 
 ---
 
@@ -400,7 +408,7 @@ When building this site, follow this sequence:
 7. **Contact** — Form integration.
 8. **Blog** — Scaffold collection + templates. Seed with placeholder if no content.
 9. **SEO + OG image** — Meta tags, sitemap, robots.txt.
-10. **Deploy config** — Netlify or GitHub Pages setup.
+10. **Deploy config** — GitHub Pages workflow + CNAME.
 11. **Accessibility audit** — Run Lighthouse, fix any issues.
 
 ---
