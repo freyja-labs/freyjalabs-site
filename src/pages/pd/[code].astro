@@ -4,8 +4,9 @@
  * Reads from /src/data/district-portals.json
  * Route: freyjalabs.com/pd/77092-hisd, freyjalabs.com/pd/27518-wcpss, etc.
  */
-import Layout from '../layouts/Layout.astro';
-import districtData from '../data/district-portals.json';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionLabel from '../../components/ui/SectionLabel.astro';
+import districtData from '../../data/district-portals.json';
 
 export function getStaticPaths() {
   return Object.keys(districtData.districts).map(code => ({
@@ -22,166 +23,231 @@ const techLesson = district.lessons.tech;
 const unpluggedLesson = district.lessons.unplugged;
 ---
 
-<Layout title={`${district.district} — ${brand.name}`}>
-  <main class="portal">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-overlay">
-        <p class="hero-eyebrow">{brand.name}</p>
-        <h1>Professional Development for {district.district}</h1>
-        <p class="hero-tagline">Customized. Hands-on. Built for your teachers and your students.</p>
+<PageLayout
+  title={`${district.district} — Professional Development`}
+  description={`Customized, hands-on professional development for ${district.district}. AI literacy, STEM integration, and computational thinking workshops built for your teachers and students.`}
+  path={`/pd/${code}`}
+>
+  <!-- HERO -->
+  <section class="bg-warm-white px-8 pt-20 pb-24">
+    <div class="max-w-4xl mx-auto text-center">
+      <SectionLabel>{brand.name}</SectionLabel>
+      <h1 class="font-serif text-4xl md:text-5xl font-medium text-ink leading-tight mb-6">
+        Professional Development for {district.district}
+      </h1>
+      <p class="font-serif text-[22px] text-earth italic mb-4">
+        Customized. Hands-on. Built for your teachers and your students.
+      </p>
+      <p class="text-[15px] text-muted">
+        {district.city}, {district.state} · {district.enrollment?.toLocaleString()} students
+      </p>
+    </div>
+  </section>
+
+  <!-- CONNECTION POINT -->
+  <section class="px-8 py-24">
+    <div class="max-w-3xl mx-auto">
+      <SectionLabel>Why {district.district}</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-6">
+        Your District, Your Context
+      </h2>
+      <p class="text-[17px] leading-relaxed text-muted">
+        {district.connectionPoint}
+      </p>
+    </div>
+  </section>
+
+  <!-- SAMPLE LESSONS -->
+  <section class="bg-warm-white px-8 py-24">
+    <div class="max-w-4xl mx-auto">
+      <SectionLabel>Sample Lessons</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-4">
+        What Your Teachers Build in a Single Day
+      </h2>
+      <p class="text-[17px] leading-relaxed text-muted mb-14 max-w-3xl">
+        These are examples of lessons designed for your students, in your community. Every participant in a Freyja Labs engagement builds their own — tailored to their grade level, their subject area, and their students' experience.
+      </p>
+
+      <!-- TECH LESSON -->
+      <div class="p-9 bg-cream border border-border rounded-lg mb-8">
+        <span class="inline-block font-mono text-[10px] tracking-widest uppercase text-forest-light bg-forest/10 px-3 py-1 rounded mb-4">
+          {techLesson.badge}
+        </span>
+        <h3 class="font-serif text-[26px] font-semibold text-ink mb-2">{techLesson.title}</h3>
+        <p class="font-mono text-xs tracking-widest uppercase text-earth mb-6">
+          {techLesson.grade_band} · {techLesson.subjects.join(' / ')} · {techLesson.duration_minutes} minutes
+        </p>
+        <p class="text-[17px] leading-relaxed text-muted mb-8">{techLesson.overview}</p>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <div class="p-6 bg-warm-white border border-border rounded-lg">
+            <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Content Objectives</h4>
+            <ul class="space-y-2">
+              {techLesson.content_objectives.map(obj => (
+                <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-forest before:rounded-full">{obj}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="p-6 bg-warm-white border border-forest/20 rounded-lg">
+            <h4 class="font-sans text-[15px] font-semibold text-forest mb-3">AI Literacy Objectives</h4>
+            <ul class="space-y-2">
+              {techLesson.ai_literacy_objectives.map(obj => (
+                <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-forest-light before:rounded-full">{obj}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <h4 class="font-sans text-[15px] font-semibold text-ink mb-4">What Students Do</h4>
+        <div class="space-y-4 mb-8">
+          {techLesson.procedure.map(phase => (
+            <div class="p-5 bg-warm-white border border-border rounded-lg">
+              <span class="font-mono text-[10px] tracking-widest uppercase text-earth">
+                Phase {phase.phase} · {phase.duration_minutes} min
+              </span>
+              <strong class="block font-sans text-[15px] font-semibold text-ink mt-1 mb-1">{phase.title}</strong>
+              <p class="text-[15px] leading-relaxed text-muted">{phase.description}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="p-6 bg-forest/5 border border-forest/15 rounded-lg mb-8">
+          <h4 class="font-sans text-[15px] font-semibold text-forest mb-4">Check the Machine Protocol</h4>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {techLesson.check_the_machine.map(step => (
+              <div class="p-4 bg-warm-white rounded-lg border border-border">
+                <strong class="block font-mono text-[11px] tracking-widest uppercase text-forest mb-2">
+                  {step.step}. {step.label}
+                </strong>
+                <p class="text-[14px] leading-relaxed text-muted">{step.prompt}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Materials</h4>
+            <ul class="space-y-1.5">
+              {techLesson.materials.map(m => (
+                <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-sand before:rounded-full">{m}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Assessment</h4>
+            <p class="text-[15px] leading-relaxed text-muted mb-2">{techLesson.assessment.description}</p>
+            <p class="text-[14px] leading-relaxed text-faded italic">{techLesson.assessment.criteria}</p>
+          </div>
+        </div>
       </div>
-      {/* Image loaded from Unsplash based on district.image.query */}
-      {/* Alt text: district.image.alt */}
-    </section>
 
-    <!-- CONNECTION POINT -->
-    <section class="connection">
-      <div class="container">
-        <h2>Why {district.district}</h2>
-        <p>{district.connectionPoint}</p>
-      </div>
-    </section>
+      <!-- UNPLUGGED LESSON -->
+      {unpluggedLesson && (
+        <div class="p-9 bg-cream border border-border rounded-lg">
+          <span class="inline-block font-mono text-[10px] tracking-widest uppercase text-earth bg-earth/10 px-3 py-1 rounded mb-4">
+            {unpluggedLesson.badge}
+          </span>
+          <h3 class="font-serif text-[26px] font-semibold text-ink mb-2">{unpluggedLesson.title}</h3>
+          <p class="font-mono text-xs tracking-widest uppercase text-earth mb-6">
+            {unpluggedLesson.grade_band} · {unpluggedLesson.subjects.join(' / ')} · {unpluggedLesson.duration_minutes} minutes
+          </p>
+          <p class="text-[17px] leading-relaxed text-muted mb-8">{unpluggedLesson.overview}</p>
 
-    <!-- SAMPLE LESSONS -->
-    <section class="lessons">
-      <div class="container">
-        <h2>What Your Teachers Build in a Single Day</h2>
-        <p class="section-lede">These are examples of lessons designed for your students, in your community. Every participant in a Freyja Labs engagement builds their own — tailored to their grade level, their subject area, and their students' experience.</p>
-
-        <!-- TECH LESSON -->
-        <div class="lesson-card tech">
-          <span class="badge badge-tech">{techLesson.badge}</span>
-          <h3>{techLesson.title}</h3>
-          <p class="lesson-meta">{techLesson.grade_band} · {techLesson.subjects.join(' / ')} · {techLesson.duration_minutes} minutes</p>
-          <p>{techLesson.overview}</p>
-
-          <div class="objectives-grid">
-            <div class="obj-box">
-              <h4>Content Objectives</h4>
-              <ul>
-                {techLesson.content_objectives.map(obj => <li>{obj}</li>)}
+          <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="p-6 bg-warm-white border border-border rounded-lg">
+              <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Content Objectives</h4>
+              <ul class="space-y-2">
+                {unpluggedLesson.content_objectives.map(obj => (
+                  <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-earth before:rounded-full">{obj}</li>
+                ))}
               </ul>
             </div>
-            <div class="obj-box ai-lit">
-              <h4>AI Literacy Objectives</h4>
-              <ul>
-                {techLesson.ai_literacy_objectives.map(obj => <li>{obj}</li>)}
+            <div class="p-6 bg-warm-white border border-forest/20 rounded-lg">
+              <h4 class="font-sans text-[15px] font-semibold text-forest mb-3">AI Literacy Objectives</h4>
+              <ul class="space-y-2">
+                {unpluggedLesson.ai_literacy_objectives.map(obj => (
+                  <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-forest-light before:rounded-full">{obj}</li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <h4>What Students Do</h4>
-          <div class="phases">
-            {techLesson.procedure.map(phase => (
-              <div class="phase">
-                <span class="phase-num">Phase {phase.phase} · {phase.duration_minutes} min</span>
-                <strong>{phase.title}</strong>
-                <p>{phase.description}</p>
+          <h4 class="font-sans text-[15px] font-semibold text-ink mb-4">What Students Do — No Screens, No Devices</h4>
+          <div class="space-y-4 mb-8">
+            {unpluggedLesson.procedure.map(phase => (
+              <div class="p-5 bg-warm-white border border-border rounded-lg">
+                <span class="font-mono text-[10px] tracking-widest uppercase text-earth">
+                  Phase {phase.phase} · {phase.duration_minutes} min
+                </span>
+                <strong class="block font-sans text-[15px] font-semibold text-ink mt-1 mb-1">{phase.title}</strong>
+                <p class="text-[15px] leading-relaxed text-muted">{phase.description}</p>
               </div>
             ))}
           </div>
 
-          <div class="ctm-protocol">
-            <h4>Check the Machine Protocol</h4>
-            <div class="ctm-steps">
-              {techLesson.check_the_machine.map(step => (
-                <div class="ctm-step">
-                  <strong>{step.step}. {step.label}</strong>
-                  <p>{step.prompt}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div class="bottom-row">
+          <div class="grid md:grid-cols-2 gap-6">
             <div>
-              <h4>Materials</h4>
-              <ul>{techLesson.materials.map(m => <li>{m}</li>)}</ul>
+              <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Materials</h4>
+              <ul class="space-y-1.5">
+                {unpluggedLesson.materials.map(m => (
+                  <li class="text-[15px] leading-relaxed text-muted pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-1.5 before:h-1.5 before:bg-sand before:rounded-full">{m}</li>
+                ))}
+              </ul>
             </div>
             <div>
-              <h4>Assessment</h4>
-              <p>{techLesson.assessment.description}</p>
-              <p class="criteria">{techLesson.assessment.criteria}</p>
+              <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Assessment</h4>
+              <p class="text-[15px] leading-relaxed text-muted">{unpluggedLesson.assessment.description}</p>
             </div>
           </div>
         </div>
+      )}
+    </div>
+  </section>
 
-        <!-- UNPLUGGED LESSON -->
-        {unpluggedLesson && (
-          <div class="lesson-card unplugged">
-            <span class="badge badge-unplugged">{unpluggedLesson.badge}</span>
-            <h3>{unpluggedLesson.title}</h3>
-            <p class="lesson-meta">{unpluggedLesson.grade_band} · {unpluggedLesson.subjects.join(' / ')} · {unpluggedLesson.duration_minutes} minutes</p>
-            <p>{unpluggedLesson.overview}</p>
-
-            <div class="objectives-grid">
-              <div class="obj-box">
-                <h4>Content Objectives</h4>
-                <ul>{unpluggedLesson.content_objectives.map(obj => <li>{obj}</li>)}</ul>
-              </div>
-              <div class="obj-box ai-lit">
-                <h4>AI Literacy Objectives</h4>
-                <ul>{unpluggedLesson.ai_literacy_objectives.map(obj => <li>{obj}</li>)}</ul>
-              </div>
-            </div>
-
-            <h4>What Students Do — No Screens, No Devices</h4>
-            <div class="phases">
-              {unpluggedLesson.procedure.map(phase => (
-                <div class="phase">
-                  <span class="phase-num">Phase {phase.phase} · {phase.duration_minutes} min</span>
-                  <strong>{phase.title}</strong>
-                  <p>{phase.description}</p>
-                </div>
-              ))}
-            </div>
-
-            <div class="bottom-row">
-              <div>
-                <h4>Materials</h4>
-                <ul>{unpluggedLesson.materials.map(m => <li>{m}</li>)}</ul>
-              </div>
-              <div>
-                <h4>Assessment</h4>
-                <p>{unpluggedLesson.assessment.description}</p>
-              </div>
-            </div>
+  <!-- ENGAGEMENT OPTIONS -->
+  <section class="px-8 py-24">
+    <div class="max-w-4xl mx-auto">
+      <SectionLabel>Engagement Options</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-10">
+        How We Can Work Together
+      </h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {district.engagementOptions.map(opt => (
+          <div class="p-9 bg-warm-white border border-border rounded-lg hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
+            <h3 class="font-serif text-[22px] font-semibold text-ink mb-1">{opt.name}</h3>
+            <p class="font-mono text-[10px] tracking-widest uppercase text-earth mb-4">{opt.duration}</p>
+            <p class="text-[15px] leading-relaxed text-muted mb-4">{opt.description}</p>
+            <p class="text-[15px] leading-relaxed text-muted">
+              <strong class="text-ink">Participants:</strong> {opt.participants}
+            </p>
+            <p class="text-[15px] leading-relaxed text-muted mt-2">
+              <strong class="text-ink">What you get:</strong> {opt.deliverables}
+            </p>
           </div>
-        )}
+        ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ENGAGEMENT OPTIONS -->
-    <section class="engagements">
-      <div class="container">
-        <h2>How We Can Work Together</h2>
-        <div class="engagement-grid">
-          {district.engagementOptions.map(opt => (
-            <div class="engagement-card">
-              <h3>{opt.name}</h3>
-              <p class="duration">{opt.duration}</p>
-              <p>{opt.description}</p>
-              <p class="participants"><strong>Participants:</strong> {opt.participants}</p>
-              <p class="deliverables"><strong>What you get:</strong> {opt.deliverables}</p>
-            </div>
-          ))}
-        </div>
+  <!-- CLOSING / CTA -->
+  <section class="bg-forest px-8 py-24">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="font-serif text-[22px] md:text-[26px] text-warm-white leading-snug mb-8 italic">
+        {meta.closing_line}
+      </p>
+      <div class="flex flex-col items-center gap-2 mb-6">
+        {brand.founders.map(f => (
+          <p class="text-white/75 text-[15px]">{f.name}, {f.credential}</p>
+        ))}
       </div>
-    </section>
-
-    <!-- CLOSING -->
-    <section class="closing">
-      <div class="container">
-        <p class="empowerment">{meta.closing_line}</p>
-        <div class="founders">
-          {brand.founders.map(f => (
-            <p>{f.name}, {f.credential}</p>
-          ))}
-        </div>
-        <p class="tagline-footer">{brand.tagline}</p>
-        <p class="contact">hello@freyjalabs.com · freyjalabs.com</p>
-      </div>
-    </section>
-  </main>
-</Layout>
+      <p class="font-serif text-[20px] text-warm-white font-medium mb-6">{brand.tagline}</p>
+      <a
+        href="mailto:hello@freyjalabs.com"
+        class="inline-block rounded-md font-sans font-semibold transition-all duration-200 text-center bg-warm-white text-forest px-10 py-4 text-base hover:-translate-y-0.5 hover:shadow-lg"
+      >
+        hello@freyjalabs.com
+      </a>
+    </div>
+  </section>
+</PageLayout>
