@@ -1,0 +1,149 @@
+---
+/**
+ * DistrictMap.astro
+ *
+ * Renders a stylized animated street network for a given district.
+ * Path data comes from src/data/district-maps.json (populated at build
+ * time by scripts/fetch-district-maps.mjs from OpenStreetMap).
+ *
+ * If no map data is cached for the code, renders a soft fallback gradient
+ * so the page still looks intentional.
+ *
+ * © OpenStreetMap contributors. Attribution shown in footer of containing
+ * section per ODbL.
+ */
+import maps from '../../data/district-maps.json';
+
+interface Props {
+  code: string;
+  class?: string;
+  label?: string;
+}
+
+const { code, class: className = '', label = '' } = Astro.props;
+const mapData = (maps as Record<string, any>)[code] ?? null;
+const vb = mapData?.viewBox ?? { w: 800, h: 500 };
+---
+
+<div class={`district-map ${className}`} role="img" aria-label={label || `Street map of ${code}`}>
+  {mapData ? (
+    <svg
+      viewBox={`0 0 ${vb.w} ${vb.h}`}
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+    >
+      <defs>
+        <radialGradient id={`vignette-${code}`} cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="#FAF7F2" stop-opacity="0" />
+          <stop offset="80%" stop-color="#FAF7F2" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="#FAF7F2" stop-opacity="0.85" />
+        </radialGradient>
+      </defs>
+
+      {/* Minor streets — drawn first, thinnest, slowest stagger */}
+      <g class="map-layer minor" stroke="#9E7E5A" stroke-width="0.6" stroke-opacity="0.55" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        {mapData.paths.minor.map((d: string, i: number) => (
+          <path d={d} style={`animation-delay: ${(i * 8) + 200}ms`} />
+        ))}
+      </g>
+
+      {/* Mid-tier streets */}
+      <g class="map-layer mid" stroke="#6B5B3E" stroke-width="1.1" stroke-opacity="0.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        {mapData.paths.mid.map((d: string, i: number) => (
+          <path d={d} style={`animation-delay: ${(i * 12) + 600}ms`} />
+        ))}
+      </g>
+
+      {/* Major arteries — drawn last, thickest, brand forest */}
+      <g class="map-layer major" stroke="#3D6B4F" stroke-width="1.8" stroke-opacity="0.9" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        {mapData.paths.major.map((d: string, i: number) => (
+          <path d={d} style={`animation-delay: ${(i * 18) + 1100}ms`} />
+        ))}
+      </g>
+
+      {/* Center marker — pulse */}
+      <g transform={`translate(${vb.w / 2}, ${vb.h / 2})`} class="map-marker">
+        <circle r="14" fill="#3D6B4F" fill-opacity="0.12" class="marker-halo" />
+        <circle r="6" fill="#3D6B4F" fill-opacity="0.25" class="marker-halo" style="animation-delay: 0.3s" />
+        <circle r="3" fill="#3D6B4F" />
+      </g>
+
+      {/* Vignette overlay so map fades into the page */}
+      <rect x="0" y="0" width={vb.w} height={vb.h} fill={`url(#vignette-${code})`} />
+    </svg>
+  ) : (
+    <div class="map-fallback" aria-hidden="true"></div>
+  )}
+</div>
+
+<style>
+  .district-map {
+    position: relative;
+    overflow: hidden;
+  }
+  .district-map svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .map-layer path {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: drawStreet 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  .map-layer.major path {
+    animation-duration: 2.2s;
+  }
+  .map-marker {
+    opacity: 0;
+    animation: markerFade 0.8s ease 1.4s forwards;
+  }
+  .marker-halo {
+    transform-origin: center;
+    animation: markerPulse 3s ease-in-out infinite;
+  }
+  .map-fallback {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(61, 107, 79, 0.08), transparent 60%),
+      radial-gradient(ellipse at 70% 60%, rgba(107, 91, 62, 0.07), transparent 55%),
+      linear-gradient(to bottom, #FAF7F2, #FFFEF9);
+  }
+
+  @keyframes drawStreet {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes markerFade {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes markerPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.4);
+      opacity: 0.4;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-layer path {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+    .map-marker {
+      opacity: 1 !important;
+      animation: none !important;
+    }
+    .marker-halo {
+      animation: none !important;
+    }
+  }
+</style>

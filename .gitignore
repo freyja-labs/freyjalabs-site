@@ -3,3 +3,11 @@ dist/
 .astro/
 .env
 .env.*
+
+# macOS
+.DS_Store
+
+# Local-only working files
+working-folder/
+fact.check
+
