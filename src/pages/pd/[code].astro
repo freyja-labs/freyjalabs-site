@@ -160,15 +160,18 @@ const tierAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- SAMPLE LESSONS -->
+  <!-- SAMPLE LESSONS — framed as artifacts, not deliverables -->
   <section id="lessons" class="bg-warm-white px-8 py-24 scroll-mt-20">
     <div class="max-w-4xl mx-auto">
-      <SectionLabel>Sample Lessons</SectionLabel>
-      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-4">
-        What Your Teachers Build in a Single Day
+      <SectionLabel>Sample lessons — artifacts, not deliverables</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-6">
+        We don't deliver lesson plans.
       </h2>
-      <p class="text-[17px] leading-relaxed text-muted mb-14 max-w-3xl">
-        These are examples of lessons designed for your students, in your community. Every participant in a Freyja Labs engagement builds their own — tailored to their grade level, their subject area, and their students' experience.
+      <p class="text-[18px] leading-relaxed text-ink mb-5 max-w-3xl">
+        We deliver the change in your teachers. The lessons below are the receipts.
+      </p>
+      <p class="text-[16px] leading-relaxed text-muted mb-14 max-w-3xl">
+        These two examples were built for {district.district} — your students, your context, your community knowledge as the verification source. The point of the engagement isn't that your district leaves with these specific lessons. It's that your teachers leave with the confidence to design the next ten — for whatever challenge comes next: AI integration, CS/STEM integration, the {district.state} policy landscape, the local context only your educators can read. The artifacts you'll see below are evidence of that capability.
       </p>
 
       {lessons.map(({ kind, lesson, accent }) => {
@@ -185,7 +188,22 @@ const tierAccent: Record<string, string> = {
             <p class="font-mono text-xs tracking-widest uppercase text-earth mb-6">
               {lesson.grade_band} · {lesson.subjects.join(' / ')} · {lesson.duration_minutes} minutes
             </p>
-            <p class="text-[17px] leading-relaxed text-muted mb-8">{lesson.overview}</p>
+
+            {lesson.district_framing ? (
+              <p class="font-serif text-[18px] leading-relaxed text-ink mb-8">{lesson.district_framing}</p>
+            ) : (
+              <p class="text-[17px] leading-relaxed text-muted mb-8">{lesson.overview}</p>
+            )}
+
+            {lesson.distinction && (
+              <div class="mb-9 p-6 bg-forest/[0.06] border-l-4 border-forest rounded-r-lg">
+                <div class="flex items-baseline gap-2 mb-2">
+                  <span class="font-mono text-[10px] tracking-widest uppercase text-forest font-semibold">What's new</span>
+                  <span class="font-mono text-[10px] tracking-widest uppercase text-faded">— what wouldn't have happened before this PD</span>
+                </div>
+                <p class="font-serif text-[17px] leading-[1.55] text-ink">{lesson.distinction}</p>
+              </div>
+            )}
 
             <div class="grid md:grid-cols-2 gap-6 mb-8">
               <div class="p-6 bg-warm-white border border-border rounded-lg">
@@ -387,6 +405,13 @@ const tierAccent: Record<string, string> = {
           </div>
         );
       })}
+
+      <!-- Closing reminder — artifacts vs. deliverables -->
+      <div class="mt-12 p-8 bg-forest/[0.05] border border-forest/15 rounded-lg">
+        <p class="font-serif text-[20px] md:text-[22px] leading-[1.5] text-ink italic">
+          Worth saying again: the lessons above are receipts, not the goal. The point of the engagement is the change in your teachers — their confidence to design the next ten lessons themselves, for whatever {district.district} faces next. We don't deliver lesson plans. We deliver capability.
+        </p>
+      </div>
     </div>
   </section>
 
