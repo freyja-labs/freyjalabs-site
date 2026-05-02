@@ -1,0 +1,187 @@
+---
+/**
+ * /pd/[code].astro — Dynamic district portal page
+ * Reads from /src/data/district-portals.json
+ * Route: freyjalabs.com/pd/77092-hisd, freyjalabs.com/pd/27518-wcpss, etc.
+ */
+import Layout from '../layouts/Layout.astro';
+import districtData from '../data/district-portals.json';
+
+export function getStaticPaths() {
+  return Object.keys(districtData.districts).map(code => ({
+    params: { code },
+    props: { district: districtData.districts[code], meta: districtData.meta, states: districtData.states }
+  }));
+}
+
+const { code } = Astro.params;
+const { district, meta, states } = Astro.props;
+const { brand } = meta;
+const stateStandards = states[district.state] || {};
+const techLesson = district.lessons.tech;
+const unpluggedLesson = district.lessons.unplugged;
+---
+
+<Layout title={`${district.district} — ${brand.name}`}>
+  <main class="portal">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-overlay">
+        <p class="hero-eyebrow">{brand.name}</p>
+        <h1>Professional Development for {district.district}</h1>
+        <p class="hero-tagline">Customized. Hands-on. Built for your teachers and your students.</p>
+      </div>
+      {/* Image loaded from Unsplash based on district.image.query */}
+      {/* Alt text: district.image.alt */}
+    </section>
+
+    <!-- CONNECTION POINT -->
+    <section class="connection">
+      <div class="container">
+        <h2>Why {district.district}</h2>
+        <p>{district.connectionPoint}</p>
+      </div>
+    </section>
+
+    <!-- SAMPLE LESSONS -->
+    <section class="lessons">
+      <div class="container">
+        <h2>What Your Teachers Build in a Single Day</h2>
+        <p class="section-lede">These are examples of lessons designed for your students, in your community. Every participant in a Freyja Labs engagement builds their own — tailored to their grade level, their subject area, and their students' experience.</p>
+
+        <!-- TECH LESSON -->
+        <div class="lesson-card tech">
+          <span class="badge badge-tech">{techLesson.badge}</span>
+          <h3>{techLesson.title}</h3>
+          <p class="lesson-meta">{techLesson.grade_band} · {techLesson.subjects.join(' / ')} · {techLesson.duration_minutes} minutes</p>
+          <p>{techLesson.overview}</p>
+
+          <div class="objectives-grid">
+            <div class="obj-box">
+              <h4>Content Objectives</h4>
+              <ul>
+                {techLesson.content_objectives.map(obj => <li>{obj}</li>)}
+              </ul>
+            </div>
+            <div class="obj-box ai-lit">
+              <h4>AI Literacy Objectives</h4>
+              <ul>
+                {techLesson.ai_literacy_objectives.map(obj => <li>{obj}</li>)}
+              </ul>
+            </div>
+          </div>
+
+          <h4>What Students Do</h4>
+          <div class="phases">
+            {techLesson.procedure.map(phase => (
+              <div class="phase">
+                <span class="phase-num">Phase {phase.phase} · {phase.duration_minutes} min</span>
+                <strong>{phase.title}</strong>
+                <p>{phase.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="ctm-protocol">
+            <h4>Check the Machine Protocol</h4>
+            <div class="ctm-steps">
+              {techLesson.check_the_machine.map(step => (
+                <div class="ctm-step">
+                  <strong>{step.step}. {step.label}</strong>
+                  <p>{step.prompt}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bottom-row">
+            <div>
+              <h4>Materials</h4>
+              <ul>{techLesson.materials.map(m => <li>{m}</li>)}</ul>
+            </div>
+            <div>
+              <h4>Assessment</h4>
+              <p>{techLesson.assessment.description}</p>
+              <p class="criteria">{techLesson.assessment.criteria}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- UNPLUGGED LESSON -->
+        {unpluggedLesson && (
+          <div class="lesson-card unplugged">
+            <span class="badge badge-unplugged">{unpluggedLesson.badge}</span>
+            <h3>{unpluggedLesson.title}</h3>
+            <p class="lesson-meta">{unpluggedLesson.grade_band} · {unpluggedLesson.subjects.join(' / ')} · {unpluggedLesson.duration_minutes} minutes</p>
+            <p>{unpluggedLesson.overview}</p>
+
+            <div class="objectives-grid">
+              <div class="obj-box">
+                <h4>Content Objectives</h4>
+                <ul>{unpluggedLesson.content_objectives.map(obj => <li>{obj}</li>)}</ul>
+              </div>
+              <div class="obj-box ai-lit">
+                <h4>AI Literacy Objectives</h4>
+                <ul>{unpluggedLesson.ai_literacy_objectives.map(obj => <li>{obj}</li>)}</ul>
+              </div>
+            </div>
+
+            <h4>What Students Do — No Screens, No Devices</h4>
+            <div class="phases">
+              {unpluggedLesson.procedure.map(phase => (
+                <div class="phase">
+                  <span class="phase-num">Phase {phase.phase} · {phase.duration_minutes} min</span>
+                  <strong>{phase.title}</strong>
+                  <p>{phase.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="bottom-row">
+              <div>
+                <h4>Materials</h4>
+                <ul>{unpluggedLesson.materials.map(m => <li>{m}</li>)}</ul>
+              </div>
+              <div>
+                <h4>Assessment</h4>
+                <p>{unpluggedLesson.assessment.description}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- ENGAGEMENT OPTIONS -->
+    <section class="engagements">
+      <div class="container">
+        <h2>How We Can Work Together</h2>
+        <div class="engagement-grid">
+          {district.engagementOptions.map(opt => (
+            <div class="engagement-card">
+              <h3>{opt.name}</h3>
+              <p class="duration">{opt.duration}</p>
+              <p>{opt.description}</p>
+              <p class="participants"><strong>Participants:</strong> {opt.participants}</p>
+              <p class="deliverables"><strong>What you get:</strong> {opt.deliverables}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="closing">
+      <div class="container">
+        <p class="empowerment">{meta.closing_line}</p>
+        <div class="founders">
+          {brand.founders.map(f => (
+            <p>{f.name}, {f.credential}</p>
+          ))}
+        </div>
+        <p class="tagline-footer">{brand.tagline}</p>
+        <p class="contact">hello@freyjalabs.com · freyjalabs.com</p>
+      </div>
+    </section>
+  </main>
+</Layout>
