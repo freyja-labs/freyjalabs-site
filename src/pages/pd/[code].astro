@@ -7,6 +7,7 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import SectionLabel from '../../components/ui/SectionLabel.astro';
 import DistrictMap from '../../components/icons/DistrictMap.astro';
+import FeedbackCallout from '../../components/ui/FeedbackCallout.astro';
 import districtData from '../../data/district-portals.json';
 
 export function getStaticPaths() {
@@ -440,4 +441,6 @@ const tierAccent: Record<string, string> = {
       </a>
     </div>
   </section>
+
+  <FeedbackCallout districtCode={code} districtName={district.district} />
 </PageLayout>

@@ -1,0 +1,457 @@
+---
+/**
+ * FeedbackCallout.astro
+ *
+ * Floating bottom-right feedback widget that travels with the visitor.
+ *
+ * UX progression:
+ *   1) Collapsed pill — small, peeks from the right edge. Subtle scroll
+ *      shimmy draws attention without being intrusive.
+ *   2) Hover or focus — expands to reveal a textarea. Stays open as long
+ *      as the visitor is interacting (hover or focus inside).
+ *   3) Long hover (~700ms) OR first keystroke — slides in the submit
+ *      button. Progressive reveal so the form doesn't feel demanding
+ *      until the visitor has committed.
+ *   4) Submit — POSTs JSON to Formspree (no page redirect). Captures
+ *      district code, district name, and page URL automatically. No
+ *      email field; feedback is anonymous by design.
+ *   5) Success — brief "Thanks" state, then collapses.
+ *
+ * Accessibility:
+ *   - Focus opens the same way as hover (keyboard equivalent)
+ *   - Escape closes
+ *   - prefers-reduced-motion disables the scroll shimmy
+ *   - Form is a real <form>, submit button is a real <button>
+ */
+interface Props {
+  districtCode: string;
+  districtName: string;
+  formspreeUrl?: string;
+}
+
+const {
+  districtCode,
+  districtName,
+  formspreeUrl = 'https://formspree.io/f/meeneqwl',
+} = Astro.props;
+---
+
+<div
+  class="feedback-callout"
+  data-formspree={formspreeUrl}
+  data-district-code={districtCode}
+  data-district-name={districtName}
+  aria-live="polite"
+>
+  <form class="feedback-form" novalidate>
+    <button
+      type="button"
+      class="feedback-toggle"
+      aria-label="Open feedback"
+      aria-expanded="false"
+    >
+      <span class="toggle-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+      </span>
+      <span class="toggle-label">Feedback</span>
+    </button>
+
+    <div class="feedback-panel" hidden>
+      <label for={`feedback-text-${districtCode}`} class="feedback-label">
+        What would make this page more useful for {districtName}?
+      </label>
+      <textarea
+        id={`feedback-text-${districtCode}`}
+        name="feedback"
+        rows="3"
+        placeholder="Type your thoughts — anonymous, no email needed."
+        class="feedback-text"
+        maxlength="2000"
+      ></textarea>
+      <div class="feedback-actions">
+        <span class="feedback-hint">Anonymous · sent to Freyja Labs</span>
+        <button type="submit" class="feedback-submit" hidden>Send</button>
+      </div>
+      <div class="feedback-status" role="status"></div>
+    </div>
+  </form>
+</div>
+
+<style>
+  .feedback-callout {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    font-family: var(--font-sans);
+  }
+
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+
+  /* COLLAPSED — pill button */
+  .feedback-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    background: var(--color-forest);
+    color: var(--color-warm-white);
+    border: none;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(28, 28, 28, 0.18);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    will-change: transform;
+  }
+
+  .feedback-toggle:hover,
+  .feedback-toggle:focus-visible {
+    background: var(--color-forest-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(28, 28, 28, 0.24);
+  }
+
+  .toggle-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* SCROLL SHIMMY — gentle nudge while scrolling */
+  .feedback-callout.is-scrolling .feedback-toggle {
+    animation: feedbackShimmy 0.6s ease-in-out;
+  }
+  @keyframes feedbackShimmy {
+    0%, 100% { transform: translateY(0); }
+    35%      { transform: translateY(-4px) rotate(-1.5deg); }
+    65%      { transform: translateY(2px)  rotate(1deg); }
+  }
+
+  /* EXPANDED — panel */
+  .feedback-panel {
+    margin-bottom: 0.6rem;
+    width: min(360px, calc(100vw - 3rem));
+    background: var(--color-warm-white);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1rem 1rem 0.85rem;
+    box-shadow: 0 16px 40px rgba(28, 28, 28, 0.14);
+    transform-origin: bottom right;
+    animation: feedbackOpen 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+  }
+
+  @keyframes feedbackOpen {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .feedback-label {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--color-ink);
+    margin-bottom: 0.6rem;
+  }
+
+  .feedback-text {
+    width: 100%;
+    background: var(--color-cream);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0.6rem 0.7rem;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-ink);
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .feedback-text:focus {
+    outline: none;
+    border-color: var(--color-forest);
+    background: var(--color-warm-white);
+  }
+
+  .feedback-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+    min-height: 30px;
+  }
+
+  .feedback-hint {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-faded);
+  }
+
+  .feedback-submit {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.95rem;
+    background: var(--color-forest);
+    color: var(--color-warm-white);
+    border: none;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    animation: feedbackSubmitIn 0.28s ease;
+  }
+
+  .feedback-submit:hover,
+  .feedback-submit:focus-visible {
+    background: var(--color-forest-dark);
+    transform: translateY(-1px);
+  }
+
+  .feedback-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  @keyframes feedbackSubmitIn {
+    from { opacity: 0; transform: translateX(8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .feedback-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-forest);
+    margin-top: 0.5rem;
+    min-height: 14px;
+  }
+
+  .feedback-status[data-state="error"] {
+    color: var(--color-clay);
+  }
+
+  /* OPEN STATE */
+  .feedback-callout[data-open="true"] .feedback-toggle {
+    background: var(--color-forest-dark);
+  }
+
+  /* Mobile — fill bottom of viewport */
+  @media (max-width: 480px) {
+    .feedback-callout {
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
+    }
+    .feedback-form {
+      align-items: stretch;
+    }
+    .feedback-toggle {
+      align-self: flex-end;
+    }
+    .feedback-panel {
+      width: auto;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .feedback-toggle,
+    .feedback-panel,
+    .feedback-submit {
+      animation: none !important;
+      transition: none !important;
+    }
+    .feedback-callout.is-scrolling .feedback-toggle {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initFeedback(callout: HTMLElement) {
+    const form = callout.querySelector<HTMLFormElement>('.feedback-form')!;
+    const toggle = callout.querySelector<HTMLButtonElement>('.feedback-toggle')!;
+    const panel = callout.querySelector<HTMLElement>('.feedback-panel')!;
+    const textarea = callout.querySelector<HTMLTextAreaElement>('.feedback-text')!;
+    const submit = callout.querySelector<HTMLButtonElement>('.feedback-submit')!;
+    const status = callout.querySelector<HTMLElement>('.feedback-status')!;
+    const hint = callout.querySelector<HTMLElement>('.feedback-hint')!;
+
+    const formspree = callout.dataset.formspree!;
+    const districtCode = callout.dataset.districtCode!;
+    const districtName = callout.dataset.districtName!;
+
+    let open = false;
+    let longHoverTimer: number | null = null;
+    let closeOnLeaveTimer: number | null = null;
+
+    function setOpen(next: boolean) {
+      open = next;
+      callout.dataset.open = String(next);
+      panel.hidden = !next;
+      toggle.setAttribute('aria-expanded', String(next));
+    }
+
+    function showSubmit() {
+      submit.hidden = false;
+    }
+
+    function startLongHover() {
+      if (longHoverTimer) return;
+      longHoverTimer = window.setTimeout(() => {
+        showSubmit();
+        longHoverTimer = null;
+      }, 700);
+    }
+
+    function cancelLongHover() {
+      if (longHoverTimer) {
+        clearTimeout(longHoverTimer);
+        longHoverTimer = null;
+      }
+    }
+
+    // Hover/focus opens the panel.
+    callout.addEventListener('mouseenter', () => {
+      if (closeOnLeaveTimer) { clearTimeout(closeOnLeaveTimer); closeOnLeaveTimer = null; }
+      if (!open) setOpen(true);
+      startLongHover();
+    });
+
+    callout.addEventListener('mouseleave', () => {
+      cancelLongHover();
+      // Stay open if focus is inside (visitor is typing).
+      if (callout.contains(document.activeElement)) return;
+      // Close after a short grace period unless re-entered.
+      closeOnLeaveTimer = window.setTimeout(() => {
+        if (!callout.contains(document.activeElement) && !textarea.value.trim()) {
+          setOpen(false);
+          submit.hidden = true;
+        }
+        closeOnLeaveTimer = null;
+      }, 350);
+    });
+
+    // Toggle click also opens (mobile/keyboard).
+    toggle.addEventListener('click', () => {
+      setOpen(!open);
+      if (open) {
+        textarea.focus();
+        showSubmit();
+      } else {
+        submit.hidden = true;
+      }
+    });
+
+    // First keystroke reveals submit immediately (don't wait for hover timer).
+    textarea.addEventListener('input', () => {
+      if (textarea.value.length > 0) showSubmit();
+    });
+
+    // Escape closes.
+    callout.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        submit.hidden = true;
+        toggle.focus();
+      }
+    });
+
+    // SCROLL SHIMMY — add class briefly on scroll, remove after pause.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      let scrollTimer: number | null = null;
+      let lastShimmyAt = 0;
+      window.addEventListener('scroll', () => {
+        // Don't shimmy while open; would be distracting.
+        if (open) return;
+        const now = Date.now();
+        // Throttle to one shimmy every 2.5s max.
+        if (now - lastShimmyAt < 2500) return;
+        lastShimmyAt = now;
+        callout.classList.add('is-scrolling');
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(() => {
+          callout.classList.remove('is-scrolling');
+        }, 700);
+      }, { passive: true });
+    }
+
+    // SUBMIT — POST JSON to Formspree, show inline status.
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = textarea.value.trim();
+      if (!text) {
+        status.textContent = 'Please type something first.';
+        status.dataset.state = 'error';
+        textarea.focus();
+        return;
+      }
+      submit.disabled = true;
+      hint.textContent = 'Sending…';
+      status.textContent = '';
+      status.dataset.state = '';
+
+      try {
+        const res = await fetch(formspree, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            feedback: text,
+            district_code: districtCode,
+            district_name: districtName,
+            page_url: window.location.href,
+            page_path: window.location.pathname,
+            _subject: `District feedback — ${districtName}`,
+          }),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        status.textContent = 'Thanks. We read every one.';
+        status.dataset.state = 'ok';
+        textarea.value = '';
+        hint.textContent = 'Anonymous · sent to Freyja Labs';
+        // Auto-collapse after a beat.
+        setTimeout(() => {
+          if (!callout.contains(document.activeElement)) {
+            setOpen(false);
+            submit.hidden = true;
+            status.textContent = '';
+          }
+          submit.disabled = false;
+        }, 2200);
+      } catch (err) {
+        console.error('Feedback submit failed', err);
+        status.textContent = 'Could not send. Please try again.';
+        status.dataset.state = 'error';
+        hint.textContent = 'Anonymous · sent to Freyja Labs';
+        submit.disabled = false;
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.feedback-callout').forEach(initFeedback);
+</script>
