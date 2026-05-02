@@ -65,10 +65,11 @@ const { districtName, hasUnplugged } = Astro.props;
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(255, 254, 249, 0.92);
-    backdrop-filter: saturate(140%) blur(10px);
-    -webkit-backdrop-filter: saturate(140%) blur(10px);
-    border-bottom: 1px solid var(--color-border);
+    background: rgba(255, 254, 249, 0.96);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom: 2px solid var(--color-forest);
+    box-shadow: 0 2px 12px rgba(28, 28, 28, 0.06);
     font-family: var(--font-sans);
   }
   .sticky-nav-inner {
@@ -128,68 +129,80 @@ const { districtName, hasUnplugged } = Astro.props;
     display: inline-flex;
     align-items: baseline;
     gap: 0.4rem;
-    padding: 0.45rem 0.7rem;
+    padding: 0.5rem 0.85rem;
     border-radius: 8px;
-    color: var(--color-muted);
+    color: var(--color-forest);
     text-decoration: none;
     font-size: 13px;
-    font-weight: 500;
-    transition: background-color 0.18s ease, color 0.18s ease;
+    font-weight: 600;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
     white-space: nowrap;
+    background: rgba(61, 107, 79, 0.06);
   }
   .nav-link:hover {
-    background: var(--color-cream);
-    color: var(--color-ink);
+    background: rgba(61, 107, 79, 0.16);
+    color: var(--color-forest-dark);
+    transform: translateY(-1px);
   }
   .nav-link.is-active {
     background: var(--color-forest);
     color: var(--color-warm-white);
+    box-shadow: 0 4px 12px rgba(61, 107, 79, 0.32);
   }
-  .nav-link.is-active .nav-num { color: rgba(255, 254, 249, 0.7); }
+  .nav-link.is-active .nav-num { color: rgba(255, 254, 249, 0.85); }
 
   .nav-num {
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 0.08em;
-    color: var(--color-faded);
+    color: var(--color-forest-light);
     transition: color 0.18s ease;
+    font-weight: 700;
   }
-  .nav-label { font-weight: 600; }
+  .nav-label { font-weight: 700; }
 
   .nav-sub {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    padding-left: 0.25rem;
+    gap: 0.3rem;
+    padding-left: 0.4rem;
   }
   .nav-sublink {
     font-family: var(--font-mono);
     font-size: 10px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 999px;
-    transition: background-color 0.18s ease, color 0.18s ease;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
     white-space: nowrap;
+    font-weight: 700;
+    border: 1.5px solid transparent;
   }
   .nav-sublink[data-accent="forest"] {
     color: var(--color-forest);
-    background: rgba(61, 107, 79, 0.08);
+    background: rgba(61, 107, 79, 0.12);
+    border-color: rgba(61, 107, 79, 0.22);
   }
   .nav-sublink[data-accent="forest"]:hover,
   .nav-sublink[data-accent="forest"].is-active {
     background: var(--color-forest);
     color: var(--color-warm-white);
+    border-color: var(--color-forest);
+    transform: translateY(-1px);
   }
   .nav-sublink[data-accent="earth"] {
     color: var(--color-earth);
-    background: rgba(107, 91, 62, 0.08);
+    background: rgba(107, 91, 62, 0.12);
+    border-color: rgba(107, 91, 62, 0.22);
   }
   .nav-sublink[data-accent="earth"]:hover,
   .nav-sublink[data-accent="earth"].is-active {
     background: var(--color-earth);
     color: var(--color-warm-white);
+    border-color: var(--color-earth);
+    transform: translateY(-1px);
   }
 
   /* Mobile: scrollable nav, brand stays visible */

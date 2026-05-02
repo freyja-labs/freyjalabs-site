@@ -176,18 +176,27 @@ const tierAccent: Record<string, string> = {
               <div class="lesson-body px-9 pb-9 pt-6">
 
               {/* Sub-nav within lesson */}
-              <nav class="lesson-subnav flex flex-wrap gap-2 mb-8 pb-4 border-b border-border" aria-label={`${lesson.title} sections`}>
-                <a href={`#${lessonId}-objectives`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Objectives</a>
-                <a href={`#${lessonId}-procedure`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Procedure</a>
-                {kind === 'tech' && lesson.check_the_machine && (
-                  <a href={`#${lessonId}-protocol`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Check the Machine</a>
-                )}
-                <a href={`#${lessonId}-materials`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Materials</a>
-                <a href={`#${lessonId}-assessment`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Assessment</a>
-                {tm && (
-                  <a href={`#${lessonId}-teacher-pack`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-forest/10 text-forest border border-forest/20 hover:bg-forest hover:text-warm-white transition-colors`}>Teacher pack</a>
-                )}
-              </nav>
+              {(() => {
+                const chipBase = `text-[11px] font-mono tracking-widest uppercase font-semibold px-3.5 py-1.5 rounded-full border-2 transition-all`;
+                const chipColor = accent === 'forest'
+                  ? `bg-forest/[0.08] text-forest border-forest/30 hover:bg-forest hover:text-warm-white hover:border-forest hover:-translate-y-0.5`
+                  : `bg-earth/[0.08] text-earth border-earth/30 hover:bg-earth hover:text-warm-white hover:border-earth hover:-translate-y-0.5`;
+                return (
+                  <nav class="lesson-subnav flex flex-wrap gap-2 mb-8 pb-4 border-b-2 border-dashed border-border" aria-label={`${lesson.title} sections`}>
+                    <span class="inline-flex items-center font-mono text-[10px] tracking-widest uppercase text-faded mr-1">Jump to:</span>
+                    <a href={`#${lessonId}-objectives`} class={`${chipBase} ${chipColor}`}>Objectives</a>
+                    <a href={`#${lessonId}-procedure`} class={`${chipBase} ${chipColor}`}>Procedure</a>
+                    {kind === 'tech' && lesson.check_the_machine && (
+                      <a href={`#${lessonId}-protocol`} class={`${chipBase} ${chipColor}`}>Check the Machine</a>
+                    )}
+                    <a href={`#${lessonId}-materials`} class={`${chipBase} ${chipColor}`}>Materials</a>
+                    <a href={`#${lessonId}-assessment`} class={`${chipBase} ${chipColor}`}>Assessment</a>
+                    {tm && (
+                      <a href={`#${lessonId}-teacher-pack`} class={`text-[11px] font-mono tracking-widest uppercase font-semibold px-3.5 py-1.5 rounded-full border-2 bg-forest text-warm-white border-forest hover:bg-forest-dark hover:-translate-y-0.5 transition-all`}>Teacher pack ✦</a>
+                    )}
+                  </nav>
+                );
+              })()}
 
               <div id={`${lessonId}-objectives`} class="grid md:grid-cols-2 gap-6 mb-8 scroll-mt-32">
               <div class="p-6 bg-warm-white border border-border rounded-lg">
@@ -387,6 +396,25 @@ const tierAccent: Record<string, string> = {
               </div>
             )}
 
+              {/* Bottom-of-LP navigation: top of LP / next LP or section */}
+              <div class="lesson-bottom-nav mt-10 pt-6 border-t-2 border-dashed border-border flex flex-wrap items-center justify-between gap-3">
+                <a href={`#${lessonId}`} class={`inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-warm-white border-2 ${accentClasses.card} ${accentClasses.meta} font-mono text-[11px] tracking-widest uppercase font-semibold hover:bg-cream transition-colors`}>
+                  ↑ Top of {kindLabel}
+                </a>
+                <a href="#lessons" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-warm-white border-2 border-border text-muted font-mono text-[11px] tracking-widest uppercase hover:border-forest hover:text-forest transition-colors">
+                  ↑ Top of Lessons
+                </a>
+                {kind === 'tech' && unpluggedLesson ? (
+                  <a href="#lesson-unplugged" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-earth text-warm-white font-mono text-[11px] tracking-widest uppercase font-semibold hover:bg-earth-light transition-colors">
+                    Next: Unplugged Lesson →
+                  </a>
+                ) : (
+                  <a href="#engagements" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-forest text-warm-white font-mono text-[11px] tracking-widest uppercase font-semibold hover:bg-forest-dark transition-colors">
+                    Next: How we'd work together →
+                  </a>
+                )}
+              </div>
+
               </div>
             </details>
           </article>
@@ -417,12 +445,27 @@ const tierAccent: Record<string, string> = {
       <p class="text-[17px] leading-relaxed text-muted mb-12 max-w-3xl">
         From a 15-teacher cohort to a 100-teacher district institute, every Freyja Labs engagement holds the same standard: small tell, lots of do. Pick the size that fits — we scale facilitation, not philosophy.
       </p>
-      <div class="grid md:grid-cols-2 gap-5">
+      <p class="text-[14px] leading-relaxed text-muted mb-6 max-w-3xl">
+        <span class="font-mono text-[10px] tracking-widest uppercase text-forest font-semibold">Click any option below to mark it as interesting</span> — then use the form to send a quick note.
+      </p>
+
+      <div class="engagement-grid grid md:grid-cols-2 gap-5">
         {district.engagementOptions.map(opt => {
           const accent = tierAccent[opt.tier] || 'border-border bg-warm-white';
           return (
-            <div class={`p-7 border rounded-lg ${accent} hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}>
-              <div class="flex items-baseline justify-between gap-3 mb-1">
+            <button
+              type="button"
+              data-engagement-id={opt.id}
+              data-engagement-name={opt.name}
+              class={`engagement-option text-left p-7 border-2 rounded-lg ${accent} hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer relative`}
+              aria-pressed="false"
+            >
+              <span class="engagement-check absolute top-4 right-4 w-6 h-6 rounded-full border-2 border-border flex items-center justify-center transition-all">
+                <svg class="checkmark w-3.5 h-3.5 text-warm-white opacity-0 transition-opacity" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 8 7 12 13 4"/>
+                </svg>
+              </span>
+              <div class="flex items-baseline justify-between gap-3 mb-1 pr-8">
                 <h3 class="font-serif text-[22px] font-semibold text-ink">{opt.name}</h3>
                 <span class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0">{opt.duration}</span>
               </div>
@@ -431,15 +474,140 @@ const tierAccent: Record<string, string> = {
               <p class="text-[14px] leading-relaxed text-muted">
                 <strong class="text-ink">What you get:</strong> {opt.deliverables}
               </p>
-            </div>
+            </button>
           );
         })}
+
+        {/* 6th box — inline contact form */}
+        <form
+          id="engagement-contact-form"
+          class="md:col-span-2 lg:col-span-1 p-7 border-2 border-forest bg-forest text-warm-white rounded-lg flex flex-col gap-3"
+          data-formspree="https://formspree.io/f/mnjwnjee"
+          data-district-code={code}
+          data-district-name={district.district}
+        >
+          <div class="flex items-baseline justify-between gap-3 mb-1">
+            <h3 class="font-serif text-[22px] font-semibold text-warm-white">Start a conversation</h3>
+            <span class="font-mono text-[10px] tracking-widest uppercase text-warm-white/60 shrink-0">15 min reply</span>
+          </div>
+          <p class="font-mono text-[11px] tracking-widest uppercase text-warm-white/85 mb-2">
+            <span id="selection-summary">No options selected — that's fine</span>
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <input type="text" name="name" placeholder="Your name" required
+              class="px-3 py-2 bg-warm-white/10 border border-warm-white/30 rounded text-warm-white placeholder-warm-white/50 text-[14px] focus:outline-none focus:border-warm-white focus:bg-warm-white/15 transition-colors" />
+            <input type="email" name="email" placeholder="Your email" required
+              class="px-3 py-2 bg-warm-white/10 border border-warm-white/30 rounded text-warm-white placeholder-warm-white/50 text-[14px] focus:outline-none focus:border-warm-white focus:bg-warm-white/15 transition-colors" />
+          </div>
+          <textarea name="message" rows="3" placeholder="What's on your mind? Even a few words helps us reply usefully."
+            class="px-3 py-2 bg-warm-white/10 border border-warm-white/30 rounded text-warm-white placeholder-warm-white/50 text-[14px] focus:outline-none focus:border-warm-white focus:bg-warm-white/15 transition-colors resize-none"></textarea>
+          <input type="hidden" name="interested_in" id="interested-in-field" value="" />
+          <input type="hidden" name="district_code" value={code} />
+          <input type="hidden" name="district_name" value={district.district} />
+          <input type="hidden" name="_subject" value={`District inquiry — ${district.district}`} />
+          <div class="flex items-center justify-between gap-3 mt-1">
+            <span id="form-status" class="font-mono text-[10px] tracking-widest uppercase text-warm-white/70"></span>
+            <button type="submit"
+              class="px-5 py-2 bg-warm-white text-forest font-sans font-semibold text-[13px] rounded hover:bg-cream transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+              Send
+            </button>
+          </div>
+        </form>
       </div>
 
       <!-- Navigation hint at section end -->
       <p class="mt-12 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
         Next ↓ <a href="#cta" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">04 · Reach out</a>
       </p>
+    </div>
+
+    <script>
+      (function() {
+        const form = document.getElementById('engagement-contact-form');
+        if (!form) return;
+        const buttons = document.querySelectorAll('.engagement-option');
+        const summary = document.getElementById('selection-summary');
+        const hiddenField = document.getElementById('interested-in-field');
+        const statusEl = document.getElementById('form-status');
+        const submit = form.querySelector('button[type="submit"]');
+        const selected = new Set();
+
+        function refresh() {
+          hiddenField.value = Array.from(selected).map(s => s.id).join(', ');
+          if (selected.size === 0) {
+            summary.textContent = "No options selected — that's fine";
+          } else if (selected.size === 1) {
+            const only = [...selected][0];
+            summary.textContent = `Interested in: ${only.name}`;
+          } else {
+            summary.textContent = `Interested in ${selected.size} options`;
+          }
+        }
+
+        buttons.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.engagementId;
+            const name = btn.dataset.engagementName;
+            const isSelected = btn.getAttribute('aria-pressed') === 'true';
+            if (isSelected) {
+              selected.forEach(s => { if (s.id === id) selected.delete(s); });
+              btn.setAttribute('aria-pressed', 'false');
+              btn.classList.remove('is-selected');
+            } else {
+              selected.add({ id, name });
+              btn.setAttribute('aria-pressed', 'true');
+              btn.classList.add('is-selected');
+            }
+            refresh();
+          });
+        });
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          submit.disabled = true;
+          statusEl.textContent = 'Sending…';
+          const formData = new FormData(form);
+          const payload = Object.fromEntries(formData.entries());
+          payload.page_url = window.location.href;
+          try {
+            const res = await fetch(form.dataset.formspree, {
+              method: 'POST',
+              headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            statusEl.textContent = 'Sent. We\'ll be in touch.';
+            form.querySelector('input[name="name"]').value = '';
+            form.querySelector('input[name="email"]').value = '';
+            form.querySelector('textarea[name="message"]').value = '';
+            selected.clear();
+            buttons.forEach(b => { b.setAttribute('aria-pressed', 'false'); b.classList.remove('is-selected'); });
+            refresh();
+            setTimeout(() => { submit.disabled = false; statusEl.textContent = ''; }, 4000);
+          } catch (err) {
+            console.error(err);
+            statusEl.textContent = 'Could not send. Please try again.';
+            submit.disabled = false;
+          }
+        });
+      })();
+    </script>
+
+    <style>
+      .engagement-option.is-selected {
+        border-color: var(--color-forest);
+        background-color: rgba(61, 107, 79, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(28, 28, 28, 0.12);
+      }
+      .engagement-option.is-selected .engagement-check {
+        background-color: var(--color-forest);
+        border-color: var(--color-forest);
+      }
+      .engagement-option.is-selected .checkmark {
+        opacity: 1;
+      }
+    </style>
     </div>
   </section>
 
