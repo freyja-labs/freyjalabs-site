@@ -1,0 +1,183 @@
+---
+/**
+ * Carousel.astro
+ *
+ * Horizontal scroll-snap carousel with prev/next buttons and a position
+ * indicator. Items are passed as a default <slot>, each item should have
+ * the `carousel-item` class so the snap math works.
+ *
+ * Usage:
+ *   <Carousel label="Standards alignment" itemCount={6} accent="forest">
+ *     <div class="carousel-item">...</div>
+ *     ...
+ *   </Carousel>
+ */
+interface Props {
+  label: string;
+  itemCount: number;
+  accent?: 'forest' | 'earth';
+  id?: string;
+}
+const { label, itemCount, accent = 'forest', id } = Astro.props;
+---
+
+<div class={`carousel-wrap accent-${accent}`} data-carousel data-item-count={itemCount} id={id}>
+  <div class="carousel-controls">
+    <span class="carousel-label">{label}</span>
+    <span class="carousel-spacer"></span>
+    <span class="carousel-position" data-carousel-position>1 / {itemCount}</span>
+    <button type="button" class="carousel-btn" data-carousel-prev aria-label={`Previous ${label}`}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button type="button" class="carousel-btn" data-carousel-next aria-label={`Next ${label}`}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+  <div class="carousel-track" data-carousel-track tabindex="0" aria-label={`${label} — scroll horizontally`}>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .carousel-wrap {
+    --accent: var(--color-forest);
+    --accent-bg: rgba(61, 107, 79, 0.08);
+  }
+  .carousel-wrap.accent-earth {
+    --accent: var(--color-earth);
+    --accent-bg: rgba(107, 91, 62, 0.08);
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .carousel-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-faded);
+  }
+  .carousel-spacer { flex: 1; }
+  .carousel-position {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 700;
+    min-width: 3.5em;
+    text-align: right;
+  }
+  .carousel-btn {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    border: 1.5px solid var(--accent);
+    background: var(--accent-bg);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  .carousel-btn:hover {
+    background: var(--accent);
+    color: var(--color-warm-white);
+  }
+  .carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .carousel-btn:disabled:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 0.5rem;
+    /* Hide scrollbar — control via buttons */
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-bg) transparent;
+  }
+  .carousel-track::-webkit-scrollbar { height: 4px; }
+  .carousel-track::-webkit-scrollbar-track { background: transparent; }
+  .carousel-track::-webkit-scrollbar-thumb { background: var(--accent-bg); border-radius: 4px; }
+
+  .carousel-track > :global(.carousel-item) {
+    flex: 0 0 calc(100% - 1rem);
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  @media (min-width: 720px) {
+    .carousel-track > :global(.carousel-item) {
+      flex: 0 0 calc(50% - 0.5rem);
+    }
+  }
+</style>
+
+<script>
+  function initCarousel(wrap: HTMLElement) {
+    const track = wrap.querySelector<HTMLElement>('[data-carousel-track]')!;
+    const prev = wrap.querySelector<HTMLButtonElement>('[data-carousel-prev]')!;
+    const next = wrap.querySelector<HTMLButtonElement>('[data-carousel-next]')!;
+    const positionEl = wrap.querySelector<HTMLElement>('[data-carousel-position]')!;
+    const itemCount = parseInt(wrap.dataset.itemCount || '0', 10);
+    if (itemCount === 0) return;
+
+    function currentIndex(): number {
+      const items = track.children;
+      if (!items.length) return 0;
+      const left = track.scrollLeft;
+      // Find item with leftmost edge closest to current scrollLeft.
+      let best = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < items.length; i++) {
+        const el = items[i] as HTMLElement;
+        const dist = Math.abs(el.offsetLeft - left);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      }
+      return best;
+    }
+
+    function visiblePerView(): number {
+      // Approx: track width / first item width.
+      const item = track.firstElementChild as HTMLElement | null;
+      if (!item) return 1;
+      return Math.max(1, Math.round(track.clientWidth / item.offsetWidth));
+    }
+
+    function update() {
+      const idx = currentIndex();
+      const perView = visiblePerView();
+      positionEl.textContent = `${Math.min(idx + 1, itemCount)} / ${itemCount}`;
+      prev.disabled = idx <= 0;
+      next.disabled = idx >= itemCount - perView;
+    }
+
+    function scrollToIndex(i: number) {
+      const items = track.children;
+      const target = items[Math.max(0, Math.min(i, items.length - 1))] as HTMLElement;
+      if (target) track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+    }
+
+    prev.addEventListener('click', () => scrollToIndex(currentIndex() - 1));
+    next.addEventListener('click', () => scrollToIndex(currentIndex() + 1));
+    track.addEventListener('scroll', () => update(), { passive: true });
+    window.addEventListener('resize', () => update());
+    update();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach(initCarousel);
+</script>

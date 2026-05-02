@@ -9,6 +9,7 @@ import SectionLabel from '../../components/ui/SectionLabel.astro';
 import DistrictMap from '../../components/icons/DistrictMap.astro';
 import FeedbackCallout from '../../components/ui/FeedbackCallout.astro';
 import StickyNav from '../../components/ui/StickyNav.astro';
+import Carousel from '../../components/ui/Carousel.astro';
 import districtData from '../../data/district-portals.json';
 
 export function getStaticPaths() {
@@ -340,38 +341,34 @@ const tierAccent: Record<string, string> = {
                   </div>
                 )}
 
-                {tm.differentiation && (
-                  <div class="mb-8">
-                    <h5 class="font-sans text-[14px] font-semibold text-ink mb-4">Differentiation</h5>
-                    <div class="grid md:grid-cols-2 gap-4">
-                      <div class="p-5 bg-warm-white border border-border rounded-lg">
-                        <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-2 block">Below grade</span>
-                        <p class="text-[14px] leading-relaxed text-muted">{tm.differentiation.below_grade}</p>
-                      </div>
-                      <div class="p-5 bg-warm-white border border-border rounded-lg">
-                        <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-2 block">At grade</span>
-                        <p class="text-[14px] leading-relaxed text-muted">{tm.differentiation.at_grade}</p>
-                      </div>
-                      <div class="p-5 bg-warm-white border border-border rounded-lg">
-                        <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-2 block">Above grade</span>
-                        <p class="text-[14px] leading-relaxed text-muted">{tm.differentiation.above_grade}</p>
-                      </div>
-                      {tm.differentiation.multilingual_learners && (
-                        <div class="p-5 bg-warm-white border border-forest/20 rounded-lg">
-                          <span class="font-mono text-[10px] tracking-widest uppercase text-forest mb-2 block">Multilingual learners</span>
-                          <p class="text-[14px] leading-relaxed text-muted">{tm.differentiation.multilingual_learners}</p>
-                        </div>
-                      )}
+                {tm.differentiation && (() => {
+                  const diffItems = [
+                    { label: 'Below grade', text: tm.differentiation.below_grade, accent: 'earth' },
+                    { label: 'At grade', text: tm.differentiation.at_grade, accent: 'earth' },
+                    { label: 'Above grade', text: tm.differentiation.above_grade, accent: 'earth' },
+                    tm.differentiation.multilingual_learners && { label: 'Multilingual learners', text: tm.differentiation.multilingual_learners, accent: 'forest' },
+                  ].filter(Boolean);
+                  return (
+                    <div class="mb-8">
+                      <h5 class="font-sans text-[14px] font-semibold text-ink mb-4">Differentiation</h5>
+                      <Carousel label="Differentiation" itemCount={diffItems.length} accent={accent === 'forest' ? 'forest' : 'earth'}>
+                        {diffItems.map(d => (
+                          <div class={`carousel-item p-5 bg-warm-white border ${d.accent === 'forest' ? 'border-forest/30' : 'border-border'} rounded-lg`}>
+                            <span class={`font-mono text-[10px] tracking-widest uppercase ${d.accent === 'forest' ? 'text-forest' : 'text-earth'} mb-2 block`}>{d.label}</span>
+                            <p class="text-[14px] leading-relaxed text-muted">{d.text}</p>
+                          </div>
+                        ))}
+                      </Carousel>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 {tm.slide_cues && (
                   <div class="mb-8">
                     <h5 class="font-sans text-[14px] font-semibold text-ink mb-4">Slide Cues — {tm.slide_cues.length} slides</h5>
-                    <div class="grid sm:grid-cols-2 gap-3">
+                    <Carousel label="Slide cues" itemCount={tm.slide_cues.length} accent={accent === 'forest' ? 'forest' : 'earth'}>
                       {tm.slide_cues.map(s => (
-                        <div class="p-4 bg-warm-white border border-border rounded-lg">
+                        <div class="carousel-item p-4 bg-warm-white border border-border rounded-lg">
                           <span class="font-mono text-[10px] tracking-widest uppercase text-faded">Slide {s.slide}</span>
                           <strong class="block font-sans text-[14px] font-semibold text-ink mt-1 mb-2">{s.title}</strong>
                           <ul class="space-y-1">
@@ -381,16 +378,16 @@ const tierAccent: Record<string, string> = {
                           </ul>
                         </div>
                       ))}
-                    </div>
+                    </Carousel>
                   </div>
                 )}
 
                 {tm.standards_alignment && (
                   <div class="mb-8">
-                    <h5 class="font-sans text-[14px] font-semibold text-ink mb-4">Standards Alignment</h5>
-                    <div class="space-y-2">
+                    <h5 class="font-sans text-[14px] font-semibold text-ink mb-4">Standards Alignment — {tm.standards_alignment.length} frameworks</h5>
+                    <Carousel label="Standards" itemCount={tm.standards_alignment.length} accent={accent === 'forest' ? 'forest' : 'earth'}>
                       {tm.standards_alignment.map(s => (
-                        <div class="p-4 bg-warm-white border border-border rounded-lg">
+                        <div class="carousel-item p-4 bg-warm-white border border-border rounded-lg">
                           <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-1">
                             <span class="font-mono text-[11px] tracking-widest uppercase text-forest">{s.framework}</span>
                             <span class="font-mono text-[11px] text-clay">{s.code}</span>
@@ -398,7 +395,7 @@ const tierAccent: Record<string, string> = {
                           <p class="text-[14px] leading-relaxed text-muted">{s.text}</p>
                         </div>
                       ))}
-                    </div>
+                    </Carousel>
                   </div>
                 )}
 

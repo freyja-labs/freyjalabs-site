@@ -12,6 +12,7 @@
  *   03 · Engagements → #engagements
  *   04 · Reach out   → #cta
  */
+import LogoMark from '../icons/LogoMark.astro';
 interface Props {
   districtName: string;
   hasUnplugged: boolean;
@@ -22,8 +23,11 @@ const { districtName, hasUnplugged } = Astro.props;
 <nav class="sticky-nav" aria-label="Page sections">
   <div class="sticky-nav-inner">
     <a href="#top" class="nav-brand" data-target="top">
-      <span class="brand-mark">Freyja Labs</span>
-      <span class="brand-district">{districtName}</span>
+      <LogoMark size={28} class="brand-logo" />
+      <span class="brand-text">
+        <span class="brand-mark">Freyja Labs</span>
+        <span class="brand-district">{districtName}</span>
+      </span>
     </a>
     <ol class="nav-sections">
       <li>
@@ -84,11 +88,22 @@ const { districtName, hasUnplugged } = Astro.props;
 
   .nav-brand {
     display: inline-flex;
-    flex-direction: column;
-    gap: 0;
+    align-items: center;
+    gap: 0.55rem;
     text-decoration: none;
     color: var(--color-ink);
     flex-shrink: 0;
+  }
+  .brand-logo {
+    transition: transform 0.5s ease;
+  }
+  .nav-brand:hover .brand-logo {
+    transform: rotate(18deg);
+  }
+  .brand-text {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0;
   }
   .brand-mark {
     font-family: var(--font-serif);
