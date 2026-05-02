@@ -67,7 +67,7 @@ const DISTINCTIONS = {
   // ============================ TEXAS ============================
   '77092-hisd': {
     tech: 'Without the PD, an AI weather forecast lands as the forecast. After: students measure conditions themselves and learn that local data is the ground truth — the move that matters most when the forecast involves a Houston bayou.',
-    unplugged: 'Without the PD, examining historical hurricane forecasts is a data exercise. After: students apply Check the Machine to forecasts that affected real Houston families and learn that lived experience of a bayou rising is data no training set contains.',
+    unplugged: 'Without the PD, examining historical hurricane forecasts is a data exercise. After: students apply a structured verification protocol to forecasts that affected real Houston families and learn that lived experience of a bayou rising is data no training set contains.',
   },
   '75231-disd': {
     tech: 'Without the PD, AI bias is a slide in a deck. After: students collect community data themselves, see how AI handles different Dallas neighborhoods differently, and produce evidence of bias from data they generated — equity work as classroom practice.',

@@ -97,10 +97,21 @@ const tierAccent: Record<string, string> = {
         </p>
       )}
 
-      <!-- Navigation hint at section end -->
-      <p class="mt-14 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
-        Next ↓ <a href="#lessons" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">02 · Sample lessons</a>
-      </p>
+      <!-- Soft blog touchpoints + nav hint -->
+      <div class="mt-14 pt-8 border-t border-border/60">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-faded mb-3">If any of this resonates, you might also like</p>
+        <ul class="space-y-1.5 mb-8">
+          <li class="text-[14px] leading-relaxed text-muted">
+            <a href="/blog/ai-literacy-not-future-problem" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">AI literacy is not a future problem</a> — what your teachers are already encountering, whether the standards have arrived or not.
+          </li>
+          <li class="text-[14px] leading-relaxed text-muted">
+            <a href="/blog/research-team-vs-pd-vendor" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">What a research team brings that a PD vendor cannot</a> — why we don't sell pre-built curriculum.
+          </li>
+        </ul>
+        <p class="text-center font-mono text-[10px] tracking-widest uppercase text-faded">
+          Next ↓ <a href="#lessons" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">02 · Sample lessons</a>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -115,7 +126,7 @@ const tierAccent: Record<string, string> = {
         We deliver change for your teachers. The lessons below are the receipts.
       </p>
       <p class="text-[16px] leading-relaxed text-muted mb-14 max-w-3xl">
-        These two examples were built for {district.district} — your students, your context, your community knowledge as the verification source. The point of the engagement isn't that your district leaves with these specific lessons. It's that your teachers leave with the confidence to design the next ten — for whatever challenge comes next: AI integration, CS/STEM integration, the {district.state} policy landscape, the local context only your educators can read. The artifacts you'll see below are evidence of that capability.
+        These two examples were built for {district.district} — but what we'll actually do together depends on what you tell us about where you are and where you want to go. We custom-build with your teachers around what your students, your community, and your district leadership are actually navigating: AI integration, CS/STEM integration, {district.state} policy, the local context only your educators can read. The artifacts you'll see below are one shape that capability can take.
       </p>
 
       {lessons.map(({ kind, lesson, accent }) => {
@@ -187,7 +198,7 @@ const tierAccent: Record<string, string> = {
                     <a href={`#${lessonId}-objectives`} class={`${chipBase} ${chipColor}`}>Objectives</a>
                     <a href={`#${lessonId}-procedure`} class={`${chipBase} ${chipColor}`}>Procedure</a>
                     {kind === 'tech' && lesson.check_the_machine && (
-                      <a href={`#${lessonId}-protocol`} class={`${chipBase} ${chipColor}`}>Check the Machine</a>
+                      <a href={`#${lessonId}-protocol`} class={`${chipBase} ${chipColor}`}>Verification protocol</a>
                     )}
                     <a href={`#${lessonId}-materials`} class={`${chipBase} ${chipColor}`}>Materials</a>
                     <a href={`#${lessonId}-assessment`} class={`${chipBase} ${chipColor}`}>Assessment</a>
@@ -245,7 +256,8 @@ const tierAccent: Record<string, string> = {
 
             {kind === 'tech' && lesson.check_the_machine && (
               <div id={`${lessonId}-protocol`} class={`p-6 ${accentClasses.protoBg} border rounded-lg mb-8 scroll-mt-32`}>
-                <h4 class={`font-sans text-[15px] font-semibold ${accentClasses.protoText} mb-4`}>Check the Machine Protocol</h4>
+                <h4 class={`font-sans text-[15px] font-semibold ${accentClasses.protoText} mb-1`}>A four-step verification protocol your teachers will build with us</h4>
+                <p class="text-[13px] leading-relaxed text-muted mb-5">A practice students learn once and apply to any AI output, in any subject, for the rest of their lives.</p>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {lesson.check_the_machine.map(step => (
                     <div class="p-4 bg-warm-white rounded-lg border border-border">
@@ -256,6 +268,9 @@ const tierAccent: Record<string, string> = {
                     </div>
                   ))}
                 </div>
+                <p class="mt-5 text-[12px] text-faded italic">
+                  More on the thinking behind this — <a href="/blog/craft-series-cxedhub" class="text-forest hover:text-forest-dark underline-offset-4 underline">the framework we built it from</a>.
+                </p>
               </div>
             )}
 
@@ -428,10 +443,21 @@ const tierAccent: Record<string, string> = {
         </p>
       </div>
 
-      <!-- Navigation hint at section end -->
-      <p class="mt-8 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
-        Next ↓ <a href="#engagements" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">03 · How we'd work together</a>
-      </p>
+      <!-- Soft blog touchpoints + nav hint -->
+      <div class="mt-12 pt-8 border-t border-border/60">
+        <p class="font-mono text-[10px] tracking-widest uppercase text-faded mb-3">More on how we think about this work</p>
+        <ul class="space-y-1.5 mb-8">
+          <li class="text-[14px] leading-relaxed text-muted">
+            <a href="/blog/time-for-practice" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">"I need time for practice" — three words that reshape every PD</a> — what 60 teachers told us they actually need.
+          </li>
+          <li class="text-[14px] leading-relaxed text-muted">
+            <a href="/blog/microcredentials-that-stick" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">Microcredentials that stick</a> — designing self-paced PD teachers actually finish.
+          </li>
+        </ul>
+        <p class="text-center font-mono text-[10px] tracking-widest uppercase text-faded">
+          Next ↓ <a href="#engagements" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">03 · How we'd work together</a>
+        </p>
+      </div>
     </div>
   </section>
 
@@ -443,7 +469,7 @@ const tierAccent: Record<string, string> = {
         How We Can Work Together
       </h2>
       <p class="text-[17px] leading-relaxed text-muted mb-12 max-w-3xl">
-        From a 15-teacher cohort to a 100-teacher district institute, every Freyja Labs engagement holds the same standard: small tell, lots of do. Pick the size that fits — we scale facilitation, not philosophy.
+        We don't sell a packaged curriculum — every engagement is shaped around what your district tells us it needs. The options below are starting shapes; the actual work gets co-designed with your team. Click any that look promising and tell us what you're thinking.
       </p>
       <p class="text-[14px] leading-relaxed text-muted mb-6 max-w-3xl">
         <span class="font-mono text-[10px] tracking-widest uppercase text-forest font-semibold">Click any option below to mark it as interesting</span> — then use the form to send a quick note.
