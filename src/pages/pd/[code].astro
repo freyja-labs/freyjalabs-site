@@ -8,6 +8,7 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import SectionLabel from '../../components/ui/SectionLabel.astro';
 import DistrictMap from '../../components/icons/DistrictMap.astro';
 import FeedbackCallout from '../../components/ui/FeedbackCallout.astro';
+import StickyNav from '../../components/ui/StickyNav.astro';
 import districtData from '../../data/district-portals.json';
 
 export function getStaticPaths() {
@@ -48,7 +49,7 @@ const tierAccent: Record<string, string> = {
   path={`/pd/${code}`}
 >
   <!-- HERO with animated district map -->
-  <section class="relative overflow-hidden bg-warm-white">
+  <section id="top" class="relative overflow-hidden bg-warm-white">
     <div class="absolute inset-0 z-0">
       <DistrictMap code={code} class="h-full w-full" label={`Animated street map of ${district.city}, ${district.state}`} />
     </div>
@@ -73,28 +74,8 @@ const tierAccent: Record<string, string> = {
     </p>
   </section>
 
-  <!-- JUMP CARDS — what's on this page -->
-  <section class="px-8 -mt-10 relative z-20">
-    <div class="max-w-5xl mx-auto">
-      <div class="grid md:grid-cols-3 gap-4">
-        <a href="#context" class="group p-6 bg-warm-white border border-border rounded-lg hover:border-forest/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
-          <span class="font-mono text-[10px] tracking-widest uppercase text-forest mb-2 block">01 · Context</span>
-          <h3 class="font-serif text-[20px] font-semibold text-ink mb-1 group-hover:text-forest transition-colors">Your District, Your Place</h3>
-          <p class="text-[14px] leading-relaxed text-muted">What we know about {district.district} and the community you serve.</p>
-        </a>
-        <a href="#lessons" class="group p-6 bg-warm-white border border-border rounded-lg hover:border-forest/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
-          <span class="font-mono text-[10px] tracking-widest uppercase text-forest mb-2 block">02 · Lessons</span>
-          <h3 class="font-serif text-[20px] font-semibold text-ink mb-1 group-hover:text-forest transition-colors">Sample Lessons + Teacher Pack</h3>
-          <p class="text-[14px] leading-relaxed text-muted">Two full lessons designed for your students — with facilitation notes, differentiation, and standards alignment.</p>
-        </a>
-        <a href="#engagements" class="group p-6 bg-warm-white border border-border rounded-lg hover:border-forest/50 hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
-          <span class="font-mono text-[10px] tracking-widest uppercase text-forest mb-2 block">03 · Engagements</span>
-          <h3 class="font-serif text-[20px] font-semibold text-ink mb-1 group-hover:text-forest transition-colors">Five Ways to Work Together</h3>
-          <p class="text-[14px] leading-relaxed text-muted">From a 15-teacher cohort to a 100-teacher district institute. Pick the size that fits.</p>
-        </a>
-      </div>
-    </div>
-  </section>
+  <!-- STICKY NAV — pins under hero, jump anywhere from anywhere -->
+  <StickyNav districtName={district.district} hasUnplugged={!!unpluggedLesson} />
 
   <!-- CONTEXT — synthesized narrative reading of the district -->
   <section id="context" class="px-8 py-24 scroll-mt-20">
@@ -116,47 +97,10 @@ const tierAccent: Record<string, string> = {
         </p>
       )}
 
-      {(district.knownInitiatives || stateContext) && (
-        <div class="mt-14 grid md:grid-cols-2 gap-4 not-prose">
-          {district.knownInitiatives && (
-            <div class="p-5 bg-cream border border-border rounded-lg">
-              <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-2 block">Initiatives in motion</span>
-              <p class="text-[14px] leading-relaxed text-muted">{district.knownInitiatives}</p>
-            </div>
-          )}
-          {stateContext && (
-            <div class="p-5 bg-cream border border-border rounded-lg">
-              <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-3 block">{district.state} state landscape</span>
-              <dl class="space-y-2 text-[13px]">
-                {stateContext.aiLegislation && (
-                  <div class="flex gap-3">
-                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-20 pt-0.5">AI policy</dt>
-                    <dd class="text-muted leading-snug">{stateContext.aiLegislation}</dd>
-                  </div>
-                )}
-                {stateContext.csGradReq && (
-                  <div class="flex gap-3">
-                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-20 pt-0.5">CS req</dt>
-                    <dd class="text-muted leading-snug">{stateContext.csGradReq}{stateContext.effectiveDate ? ` · ${stateContext.effectiveDate}` : ''}</dd>
-                  </div>
-                )}
-                {stateContext.statePdFunding && (
-                  <div class="flex gap-3">
-                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-20 pt-0.5">Funding</dt>
-                    <dd class="text-muted leading-snug">{stateContext.statePdFunding}</dd>
-                  </div>
-                )}
-                {stateContext.readinessLevel && (
-                  <div class="flex gap-3">
-                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-20 pt-0.5">Stage</dt>
-                    <dd class="text-muted leading-snug">{stateContext.readinessLevel}</dd>
-                  </div>
-                )}
-              </dl>
-            </div>
-          )}
-        </div>
-      )}
+      <!-- Navigation hint at section end -->
+      <p class="mt-14 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
+        Next ↓ <a href="#lessons" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">02 · Sample lessons</a>
+      </p>
     </div>
   </section>
 
@@ -176,36 +120,76 @@ const tierAccent: Record<string, string> = {
 
       {lessons.map(({ kind, lesson, accent }) => {
         const accentClasses = accent === 'forest'
-          ? { tag: 'text-forest-light bg-forest/10', objBullet: 'before:bg-forest', aiBorder: 'border-forest/20', aiText: 'text-forest', aiBullet: 'before:bg-forest-light', protoBg: 'bg-forest/5 border-forest/15', protoText: 'text-forest', protoTag: 'text-forest' }
-          : { tag: 'text-earth bg-earth/10', objBullet: 'before:bg-earth', aiBorder: 'border-forest/20', aiText: 'text-forest', aiBullet: 'before:bg-forest-light', protoBg: 'bg-forest/5 border-forest/15', protoText: 'text-forest', protoTag: 'text-forest' };
+          ? { card: 'border-forest/30', tag: 'text-forest-light bg-forest/10', objBullet: 'before:bg-forest', aiBorder: 'border-forest/20', aiText: 'text-forest', aiBullet: 'before:bg-forest-light', protoBg: 'bg-forest/5 border-forest/15', protoText: 'text-forest', protoTag: 'text-forest', meta: 'text-forest', accentBar: 'bg-forest' }
+          : { card: 'border-earth/30', tag: 'text-earth bg-earth/10', objBullet: 'before:bg-earth', aiBorder: 'border-forest/20', aiText: 'text-forest', aiBullet: 'before:bg-forest-light', protoBg: 'bg-forest/5 border-forest/15', protoText: 'text-forest', protoTag: 'text-forest', meta: 'text-earth', accentBar: 'bg-earth' };
         const tm = lesson.teacher_materials;
+        const lessonId = `lesson-${kind}`;
+        const kindLabel = kind === 'tech' ? 'Tech lesson' : 'Unplugged lesson';
         return (
-          <div class="p-9 bg-cream border border-border rounded-lg mb-8">
-            <span class={`inline-block font-mono text-[10px] tracking-widest uppercase ${accentClasses.tag} px-3 py-1 rounded mb-4`}>
-              {lesson.badge}
-            </span>
-            <h3 class="font-serif text-[26px] font-semibold text-ink mb-2">{lesson.title}</h3>
-            <p class="font-mono text-xs tracking-widest uppercase text-earth mb-6">
-              {lesson.grade_band} · {lesson.subjects.join(' / ')} · {lesson.duration_minutes} minutes
-            </p>
+          <article id={lessonId} class={`relative scroll-mt-20 mb-8 bg-cream border-2 ${accentClasses.card} rounded-lg overflow-hidden`}>
+            {/* Accent bar */}
+            <div class={`absolute left-0 top-0 bottom-0 w-1 ${accentClasses.accentBar}`}></div>
 
-            {lesson.district_framing ? (
-              <p class="font-serif text-[18px] leading-relaxed text-ink mb-8">{lesson.district_framing}</p>
-            ) : (
-              <p class="text-[17px] leading-relaxed text-muted mb-8">{lesson.overview}</p>
-            )}
-
-            {lesson.distinction && (
-              <div class="mb-9 p-6 bg-forest/[0.06] border-l-4 border-forest rounded-r-lg">
-                <div class="flex items-baseline gap-2 mb-2">
-                  <span class="font-mono text-[10px] tracking-widest uppercase text-forest font-semibold">What's new</span>
-                  <span class="font-mono text-[10px] tracking-widest uppercase text-faded">— what wouldn't have happened before this PD</span>
-                </div>
-                <p class="font-serif text-[17px] leading-[1.55] text-ink">{lesson.distinction}</p>
+            {/* Always-visible card header — the executive summary */}
+            <div class="p-9">
+              <div class="flex items-baseline gap-3 mb-3">
+                <span class={`font-mono text-[10px] tracking-widest uppercase font-semibold ${accentClasses.meta}`}>{kindLabel}</span>
+                <span class="font-mono text-[10px] tracking-widest uppercase text-faded">/ {kind === 'tech' ? 'with devices' : 'no screens'}</span>
               </div>
-            )}
+              <span class={`inline-block font-mono text-[10px] tracking-widest uppercase ${accentClasses.tag} px-3 py-1 rounded mb-4`}>
+                {lesson.badge}
+              </span>
+              <h3 class="font-serif text-[26px] font-semibold text-ink mb-2">{lesson.title}</h3>
+              <p class="font-mono text-xs tracking-widest uppercase text-earth mb-6">
+                {lesson.grade_band} · {lesson.subjects.join(' / ')} · {lesson.duration_minutes} minutes
+              </p>
 
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
+              {lesson.district_framing ? (
+                <p class="font-serif text-[18px] leading-relaxed text-ink mb-8">{lesson.district_framing}</p>
+              ) : (
+                <p class="text-[17px] leading-relaxed text-muted mb-8">{lesson.overview}</p>
+              )}
+
+              {lesson.distinction && (
+                <div class="mb-2 p-6 bg-forest/[0.06] border-l-4 border-forest rounded-r-lg">
+                  <div class="flex items-baseline gap-2 mb-2">
+                    <span class="font-mono text-[10px] tracking-widest uppercase text-forest font-semibold">What's new</span>
+                    <span class="font-mono text-[10px] tracking-widest uppercase text-faded">— what wouldn't have happened before this PD</span>
+                  </div>
+                  <p class="font-serif text-[17px] leading-[1.55] text-ink">{lesson.distinction}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Collapsible full lesson plan */}
+            <details class="lesson-details group">
+              <summary class={`lesson-summary border-t-2 border-dashed ${accentClasses.card} px-9 py-5 cursor-pointer hover:bg-warm-white/60 transition-colors`}>
+                <span class="flex items-center justify-between gap-3">
+                  <span class="flex items-baseline gap-3">
+                    <span class={`font-mono text-[10px] tracking-widest uppercase font-semibold ${accentClasses.meta}`}>Show full lesson plan</span>
+                    <span class="font-mono text-[10px] tracking-widest uppercase text-faded">objectives · procedure · materials · assessment{tm ? ' · teacher pack' : ''}</span>
+                  </span>
+                  <span class="lesson-chevron font-mono text-[14px] text-faded group-open:rotate-180 transition-transform">▾</span>
+                </span>
+              </summary>
+
+              <div class="lesson-body px-9 pb-9 pt-6">
+
+              {/* Sub-nav within lesson */}
+              <nav class="lesson-subnav flex flex-wrap gap-2 mb-8 pb-4 border-b border-border" aria-label={`${lesson.title} sections`}>
+                <a href={`#${lessonId}-objectives`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Objectives</a>
+                <a href={`#${lessonId}-procedure`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Procedure</a>
+                {kind === 'tech' && lesson.check_the_machine && (
+                  <a href={`#${lessonId}-protocol`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Check the Machine</a>
+                )}
+                <a href={`#${lessonId}-materials`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Materials</a>
+                <a href={`#${lessonId}-assessment`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-warm-white border border-border hover:border-forest hover:text-forest transition-colors`}>Assessment</a>
+                {tm && (
+                  <a href={`#${lessonId}-teacher-pack`} class={`text-[11px] font-mono tracking-widest uppercase px-3 py-1.5 rounded-full bg-forest/10 text-forest border border-forest/20 hover:bg-forest hover:text-warm-white transition-colors`}>Teacher pack</a>
+                )}
+              </nav>
+
+              <div id={`${lessonId}-objectives`} class="grid md:grid-cols-2 gap-6 mb-8 scroll-mt-32">
               <div class="p-6 bg-warm-white border border-border rounded-lg">
                 <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Content Objectives</h4>
                 <ul class="space-y-2">
@@ -224,7 +208,7 @@ const tierAccent: Record<string, string> = {
               </div>
             </div>
 
-            <h4 class="font-sans text-[15px] font-semibold text-ink mb-4">
+            <h4 id={`${lessonId}-procedure`} class="font-sans text-[15px] font-semibold text-ink mb-4 scroll-mt-32">
               {kind === 'unplugged' ? 'What Students Do — No Screens, No Devices' : 'What Students Do'}
             </h4>
             <div class="space-y-4 mb-8">
@@ -251,7 +235,7 @@ const tierAccent: Record<string, string> = {
             </div>
 
             {kind === 'tech' && lesson.check_the_machine && (
-              <div class={`p-6 ${accentClasses.protoBg} border rounded-lg mb-8`}>
+              <div id={`${lessonId}-protocol`} class={`p-6 ${accentClasses.protoBg} border rounded-lg mb-8 scroll-mt-32`}>
                 <h4 class={`font-sans text-[15px] font-semibold ${accentClasses.protoText} mb-4`}>Check the Machine Protocol</h4>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {lesson.check_the_machine.map(step => (
@@ -267,7 +251,7 @@ const tierAccent: Record<string, string> = {
             )}
 
             <div class="grid md:grid-cols-2 gap-6">
-              <div>
+              <div id={`${lessonId}-materials`} class="scroll-mt-32">
                 <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Materials</h4>
                 <ul class="space-y-1.5">
                   {lesson.materials.map(m => (
@@ -275,7 +259,7 @@ const tierAccent: Record<string, string> = {
                   ))}
                 </ul>
               </div>
-              <div>
+              <div id={`${lessonId}-assessment`} class="scroll-mt-32">
                 <h4 class="font-sans text-[15px] font-semibold text-ink mb-3">Assessment</h4>
                 <p class="text-[15px] leading-relaxed text-muted mb-2">{lesson.assessment.description}</p>
                 {lesson.assessment.criteria && (
@@ -286,7 +270,7 @@ const tierAccent: Record<string, string> = {
 
             {/* TEACHER MATERIALS — only renders when present */}
             {tm && (
-              <div class="mt-10 pt-10 border-t-2 border-dashed border-border">
+              <div id={`${lessonId}-teacher-pack`} class="mt-10 pt-10 border-t-2 border-dashed border-border scroll-mt-32">
                 <div class="flex items-baseline gap-3 mb-2">
                   <span class="font-mono text-[10px] tracking-widest uppercase text-forest">Teacher pack</span>
                   <span class="font-mono text-[10px] tracking-widest uppercase text-faded">— everything you need to teach this</span>
@@ -402,7 +386,10 @@ const tierAccent: Record<string, string> = {
                 )}
               </div>
             )}
-          </div>
+
+              </div>
+            </details>
+          </article>
         );
       })}
 
@@ -412,6 +399,11 @@ const tierAccent: Record<string, string> = {
           Worth saying again: the lessons above are receipts, not the goal. The point of the engagement is the change in your teachers — their confidence to design the next ten lessons themselves, for whatever {district.district} faces next. We don't deliver lesson plans. We deliver capability.
         </p>
       </div>
+
+      <!-- Navigation hint at section end -->
+      <p class="mt-8 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
+        Next ↓ <a href="#engagements" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">03 · How we'd work together</a>
+      </p>
     </div>
   </section>
 
@@ -443,11 +435,16 @@ const tierAccent: Record<string, string> = {
           );
         })}
       </div>
+
+      <!-- Navigation hint at section end -->
+      <p class="mt-12 text-center font-mono text-[10px] tracking-widest uppercase text-faded">
+        Next ↓ <a href="#cta" class="text-forest hover:text-forest-dark underline-offset-4 hover:underline">04 · Reach out</a>
+      </p>
     </div>
   </section>
 
   <!-- CLOSING / CTA -->
-  <section class="bg-forest px-8 py-24">
+  <section id="cta" class="bg-forest px-8 py-24 scroll-mt-20">
     <div class="max-w-3xl mx-auto text-center">
       <p class="font-serif text-[22px] md:text-[26px] text-warm-white leading-snug mb-8 italic">
         {meta.closing_line}

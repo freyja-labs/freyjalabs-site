@@ -1,0 +1,254 @@
+---
+/**
+ * StickyNav.astro
+ *
+ * Pinned section navigation that travels with the viewer at any scroll
+ * position. Highlights the currently-visible section. Supports anchored
+ * sub-targets (lesson cards by kind).
+ *
+ * Sections shown:
+ *   01 · Context     → #context
+ *   02 · Lessons     → #lessons (with sub-anchors #lesson-tech, #lesson-unplugged)
+ *   03 · Engagements → #engagements
+ *   04 · Reach out   → #cta
+ */
+interface Props {
+  districtName: string;
+  hasUnplugged: boolean;
+}
+const { districtName, hasUnplugged } = Astro.props;
+---
+
+<nav class="sticky-nav" aria-label="Page sections">
+  <div class="sticky-nav-inner">
+    <a href="#top" class="nav-brand" data-target="top">
+      <span class="brand-mark">Freyja Labs</span>
+      <span class="brand-district">{districtName}</span>
+    </a>
+    <ol class="nav-sections">
+      <li>
+        <a href="#context" data-target="context" class="nav-link">
+          <span class="nav-num">01</span>
+          <span class="nav-label">Context</span>
+        </a>
+      </li>
+      <li class="nav-group">
+        <a href="#lessons" data-target="lessons" class="nav-link">
+          <span class="nav-num">02</span>
+          <span class="nav-label">Lessons</span>
+        </a>
+        <span class="nav-sub">
+          <a href="#lesson-tech" data-target="lesson-tech" class="nav-sublink" data-accent="forest">Tech</a>
+          {hasUnplugged && (
+            <a href="#lesson-unplugged" data-target="lesson-unplugged" class="nav-sublink" data-accent="earth">Unplugged</a>
+          )}
+        </span>
+      </li>
+      <li>
+        <a href="#engagements" data-target="engagements" class="nav-link">
+          <span class="nav-num">03</span>
+          <span class="nav-label">Engagements</span>
+        </a>
+      </li>
+      <li>
+        <a href="#cta" data-target="cta" class="nav-link">
+          <span class="nav-num">04</span>
+          <span class="nav-label">Reach out</span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 254, 249, 0.92);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-sans);
+  }
+  .sticky-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .nav-brand {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0;
+    text-decoration: none;
+    color: var(--color-ink);
+    flex-shrink: 0;
+  }
+  .brand-mark {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-forest);
+    line-height: 1;
+  }
+  .brand-district {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-faded);
+    margin-top: 2px;
+  }
+
+  .nav-sections {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-sections::-webkit-scrollbar { display: none; }
+
+  .nav-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    color: var(--color-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
+  }
+  .nav-link:hover {
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
+  .nav-link.is-active {
+    background: var(--color-forest);
+    color: var(--color-warm-white);
+  }
+  .nav-link.is-active .nav-num { color: rgba(255, 254, 249, 0.7); }
+
+  .nav-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--color-faded);
+    transition: color 0.18s ease;
+  }
+  .nav-label { font-weight: 600; }
+
+  .nav-sub {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding-left: 0.25rem;
+  }
+  .nav-sublink {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
+  }
+  .nav-sublink[data-accent="forest"] {
+    color: var(--color-forest);
+    background: rgba(61, 107, 79, 0.08);
+  }
+  .nav-sublink[data-accent="forest"]:hover,
+  .nav-sublink[data-accent="forest"].is-active {
+    background: var(--color-forest);
+    color: var(--color-warm-white);
+  }
+  .nav-sublink[data-accent="earth"] {
+    color: var(--color-earth);
+    background: rgba(107, 91, 62, 0.08);
+  }
+  .nav-sublink[data-accent="earth"]:hover,
+  .nav-sublink[data-accent="earth"].is-active {
+    background: var(--color-earth);
+    color: var(--color-warm-white);
+  }
+
+  /* Mobile: scrollable nav, brand stays visible */
+  @media (max-width: 720px) {
+    .sticky-nav-inner {
+      padding: 0.5rem 0.75rem;
+      gap: 0.75rem;
+    }
+    .nav-sub { display: none; }
+    .nav-link { padding: 0.4rem 0.55rem; font-size: 12px; }
+    .brand-district { display: none; }
+  }
+</style>
+
+<script>
+  // Active-section tracking via IntersectionObserver.
+  function initStickyNav() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('.sticky-nav [data-target]');
+    if (!links.length) return;
+
+    const targets = new Map<string, Element>();
+    links.forEach(link => {
+      const id = link.dataset.target!;
+      const el = id === 'top' ? document.body : document.getElementById(id);
+      if (el) targets.set(id, el);
+    });
+
+    function setActive(id: string) {
+      links.forEach(link => {
+        link.classList.toggle('is-active', link.dataset.target === id);
+      });
+    }
+
+    // Watch each section. Use rootMargin to bias active state toward the
+    // section nearest the top of the viewport (under the sticky nav).
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop);
+        if (visible.length === 0) return;
+        const id = (visible[0].target as HTMLElement).id;
+        if (id) setActive(id);
+      },
+      { rootMargin: '-80px 0px -55% 0px', threshold: 0 }
+    );
+
+    targets.forEach((el, id) => {
+      if (id === 'top') return;
+      observer.observe(el);
+    });
+
+    // Default to first section at scroll-top.
+    if (window.scrollY < 100) setActive('context');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStickyNav);
+  } else {
+    initStickyNav();
+  }
+</script>
