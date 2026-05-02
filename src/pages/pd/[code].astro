@@ -12,12 +12,17 @@ import districtData from '../../data/district-portals.json';
 export function getStaticPaths() {
   return Object.keys(districtData.districts).map(code => ({
     params: { code },
-    props: { district: districtData.districts[code], meta: districtData.meta, states: districtData.states }
+    props: {
+      district: districtData.districts[code],
+      meta: districtData.meta,
+      states: districtData.states,
+      stateContext: (districtData as any).stateContext?.[districtData.districts[code].state] || null,
+    }
   }));
 }
 
 const { code } = Astro.params;
-const { district, meta, states } = Astro.props;
+const { district, meta, states, stateContext } = Astro.props;
 const { brand } = meta;
 const stateStandards = states[district.state] || {};
 const techLesson = district.lessons.tech;
@@ -90,16 +95,77 @@ const tierAccent: Record<string, string> = {
     </div>
   </section>
 
-  <!-- CONNECTION POINT -->
+  <!-- CONTEXT — narrative reading of the district -->
   <section id="context" class="px-8 py-24 scroll-mt-20">
     <div class="max-w-3xl mx-auto">
-      <SectionLabel>Why {district.district}</SectionLabel>
-      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-6">
-        Your District, Your Context
+      <SectionLabel>Reading the moment</SectionLabel>
+      <h2 class="font-serif text-3xl md:text-[42px] font-medium text-ink leading-tight mb-8">
+        How we see your district
       </h2>
-      <p class="text-[17px] leading-relaxed text-muted">
-        {district.connectionPoint}
-      </p>
+
+      {district.districtNeeds && (
+        <p class="font-serif text-[20px] md:text-[22px] leading-[1.55] text-ink mb-10 first-letter:font-serif first-letter:text-[56px] first-letter:font-semibold first-letter:text-forest first-letter:float-left first-letter:leading-[0.9] first-letter:mr-3 first-letter:mt-1">
+          {district.districtNeeds}
+        </p>
+      )}
+
+      {district.connectionPoint && (
+        <div class="mt-12 p-7 bg-warm-white border-l-4 border-forest rounded-r-lg">
+          <span class="font-mono text-[10px] tracking-widest uppercase text-forest mb-3 block">Specifically in {district.district}</span>
+          <p class="font-serif text-[18px] leading-relaxed text-ink italic">
+            {district.connectionPoint}
+          </p>
+        </div>
+      )}
+
+      {(district.knownInitiatives || stateContext) && (
+        <div class="mt-12 grid md:grid-cols-2 gap-5">
+          {district.knownInitiatives && (
+            <div class="p-6 bg-cream border border-border rounded-lg">
+              <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-3 block">Initiatives in motion</span>
+              <p class="font-serif text-[17px] leading-relaxed text-ink">{district.knownInitiatives}</p>
+            </div>
+          )}
+          {stateContext && (
+            <div class="p-6 bg-cream border border-border rounded-lg">
+              <span class="font-mono text-[10px] tracking-widest uppercase text-earth mb-4 block">{district.state} state landscape</span>
+              <dl class="space-y-2.5 text-[14px]">
+                {stateContext.aiLegislation && (
+                  <div class="flex gap-3">
+                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-24 pt-0.5">AI policy</dt>
+                    <dd class="text-muted leading-snug">{stateContext.aiLegislation}</dd>
+                  </div>
+                )}
+                {stateContext.csGradReq && (
+                  <div class="flex gap-3">
+                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-24 pt-0.5">CS grad req</dt>
+                    <dd class="text-muted leading-snug">{stateContext.csGradReq}{stateContext.effectiveDate ? ` · ${stateContext.effectiveDate}` : ''}</dd>
+                  </div>
+                )}
+                {stateContext.statePdFunding && (
+                  <div class="flex gap-3">
+                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-24 pt-0.5">PD funding</dt>
+                    <dd class="text-muted leading-snug">{stateContext.statePdFunding}</dd>
+                  </div>
+                )}
+                {stateContext.readinessLevel && (
+                  <div class="flex gap-3">
+                    <dt class="font-mono text-[10px] tracking-widest uppercase text-faded shrink-0 w-24 pt-0.5">Readiness</dt>
+                    <dd class="text-muted leading-snug">{stateContext.readinessLevel}</dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+          )}
+        </div>
+      )}
+
+      {district.policyLandscape && (
+        <p class="mt-10 text-[14px] leading-relaxed text-faded italic">
+          <span class="font-mono not-italic text-[10px] tracking-widest uppercase text-faded mr-2">Policy frame —</span>
+          {district.policyLandscape}
+        </p>
+      )}
     </div>
   </section>
 
